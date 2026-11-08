@@ -3,10 +3,10 @@ Contributors: grillhub
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.17.40
+Stable tag: 1.18.0
 License: GPLv2 or later
 
-QR menu with WhatsApp ordering, wrap builder and Polish / English / Arabic.
+QR menu with WhatsApp ordering, kitchen orders, receipt printing, loyalty stamps, wrap builder and Polish / English / Arabic - for any restaurant.
 
 == Installation ==
 1. Plugins > Add New > Upload Plugin > choose grill-hub-menu.zip > Install > Activate.
@@ -20,7 +20,7 @@ Categories: add, rename, reorder, delete.
 Wrap builder: base prices, free portions, extra prices.
 Texts: every button/label in every language. Ingredient names are the keys that start with ing_.
 Settings: WhatsApp number, name, main colour, logo, default language, standalone page.
-Backup: download / load a .json file, reset to defaults.
+Backup: download / load a .json file, reset to the empty starter menu, or load the ready-made sample data (Backup > Sample data > Grill Hub) to see a complete menu.
 
 == Orders and receipt printing (v1.1) ==
 1. Grill Hub > Settings: turn on "Receive orders on the website", set a Kitchen PIN, choose paper width (58/80 mm) and the receipt options.
@@ -31,6 +31,13 @@ Backup: download / load a .json file, reset to defaults.
 
 == Motion (v1.3) ==
 Smooth scrolling (Lenis), GSAP reveals and sheet animations, plus click sparks, animated totals and card spotlight inspired by React Bits (re-written in plain JavaScript). Turn it off in Settings > Animations. Third-party licenses are in assets/vendor/.
+
+== Changelog 1.18.0 ==
+* The plugin is now a generic restaurant plugin. A new install starts with a small neutral starter menu (no brand, no address, no phone, no social / delivery links) that the owner fills in from the admin.
+* New: Backup > Sample data > "Load: Grill Hub". One click fills the whole menu (48 dishes with photos, prices, texts, opening hours, home page and settings) exactly as the original Grill Hub menu. The data lives in presets/grill-hub.json; delete that file to remove the option.
+* Reset now restores the empty starter menu (use the sample data button to get the Grill Hub menu back).
+* The one-time Grill Hub migrations (rotisserie chicken dishes, map position, ...) are skipped for menus that start from the starter data or a preset.
+* Brand names, logo and addresses that were fixed in the code (loyalty cards, wallet passes, notifications, alert e-mails, admin menu name) now come from the business name set in the plugin.
 
 == Changelog 1.17.40 ==
 * Fixed: the WhatsApp order message arrived without the order details. The order is created on the server first and the cart was emptied before the message was written, so it went out with no dishes and a 0 zł total. The message is now written while the cart still holds the items, then the cart is emptied — the order number and tracking link are still there.
@@ -47,10 +54,10 @@ Smooth scrolling (Lenis), GSAP reveals and sheet animations, plus click sparks, 
 * The WhatsApp order message now carries the order number and the order-tracking link: the order is created on the server first, then WhatsApp opens with "Numer zamówienia: #N" and the /track/ link (same link the tracking page reads). Works for both the WhatsApp button and the app button; when WhatsApp ordering is off the customer still goes to the /track/ page as before.
 
 == Changelog 1.17.36 ==
-* Grilled chicken photo re-plated per Ziad: the same meal now on a square white plate with hummus, garlic sauce (toum), Arabic salad and pickles next to the chicken and yellow rice.
+* Grilled chicken photo re-plated as requested: the same meal now on a square white plate with hummus, garlic sauce (toum), Arabic salad and pickles next to the chicken and yellow rice.
 
 == Changelog 1.17.35 ==
-* Grilled chicken photo replaced with Ziad's own photo: the same meal (half chicken, yellow rice, garlic sauce, carrots, pickles) re-plated on a clean white plate with a white background, like the other dish photos — the other restaurant's logo from the original photo is gone.
+* Grilled chicken photo replaced with a new photo: the same meal (half chicken, yellow rice, garlic sauce, carrots, pickles) re-plated on a clean white plate with a white background, like the other dish photos — the other restaurant's logo from the original photo is gone.
 
 == Changelog 1.17.34 ==
 * Photo for the grilled chicken dish: a grilled chicken + rice plate on a white background (images/grill-chicken.jpg, 360×360 like the other dish photos). Menus that got the dish from 1.17.33 without a photo get it filled in automatically (only when the photo is empty — a photo you set yourself is never overwritten).

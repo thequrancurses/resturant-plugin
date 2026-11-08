@@ -103,10 +103,10 @@
 			grid += '<span class="ls-pl-st' + (on ? ' on' : '') + (nw ? ' new' : '') + '">' + (on ? '<i>🔥</i>' : '<em>' + (i + 1) + '</em>') + '</span>';
 		}
 		var url = location.origin + location.pathname + '?card=' + token;
-		var logo = (D && D.logo) || 'https://grillhub.pl/wp-content/plugins/grill-hub-menu/assets/images/logo-new.png';
+		var logo = (D && D.logo) || '';
 		return '<div class="ls-pl" data-id="' + c.id + '">'
-			+ '<div class="ls-pl-logo"><img src="' + esc(logo) + '" alt="Grill Hub"></div>'
-			+ '<div class="ls-pl-brand">Grill Hub</div>'
+			+ '<div class="ls-pl-logo"><img src="' + esc(logo) + '" alt="' + esc((D && D.brand) || '') + '"></div>'
+			+ '<div class="ls-pl-brand">' + esc((D && D.brand) || '') + '</div>'
 			+ '<h2 class="ls-pl-title">' + esc(c.program_name) + '</h2>'
 			+ '<div class="ls-pl-qrwrap"><div class="ls-qr ls-qr-big" data-qr="' + esc(url) + '"></div></div>'
 			+ '<p class="ls-pl-scan">' + esc(U('scan')) + '</p>'

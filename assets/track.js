@@ -57,7 +57,7 @@
       else h += '<div class="w-sum" id="wSum" hidden></div><button type="button" class="w-ok" id="wOk">' + esc(L("wait_ok")) + "</button>";
     }
     root.innerHTML = h + "</div></div>";
-    document.title = (C.brand || "Grill Hub") + " – " + L("tr_title");
+    document.title = (C.brand || "Restaurant") + " – " + L("tr_title");
   }
   function tick() {
     build(); if (!ord || fin) return;

@@ -1,1136 +1,46 @@
 {
  "cats": [
   {
-   "id": "wraps",
+   "id": "starters",
    "name": {
-    "pl": "Wrapy",
-    "en": "Wraps",
-    "ar": "الراب"
+    "pl": "Przystawki",
+    "en": "Starters",
+    "ar": "مقبلات"
    }
   },
   {
-   "id": "box",
+   "id": "mains",
    "name": {
-    "pl": "Boxy Hub",
-    "en": "Hub Boxes",
-    "ar": "بوكسات هَب"
+    "pl": "Dania główne",
+    "en": "Main dishes",
+    "ar": "أطباق رئيسية"
    }
   },
   {
-   "id": "shaw",
+   "id": "drinks",
    "name": {
-    "pl": "Talerze Kebab Krojona",
-    "en": "Sliced Kebab Plates",
-    "ar": "أطباق الشاورما المقطّعة"
-   }
-  },
-  {
-   "id": "chicken",
-   "name": {
-    "pl": "Kurczak z rożna",
-    "en": "Rotisserie Chicken",
-    "ar": "فراخ مشوية"
-   }
-  },
-  {
-   "id": "grill",
-   "name": {
-    "pl": "Talerze Grillowane",
-    "en": "Grilled Plates",
-    "ar": "أطباق المشويات"
-   }
-  },
-  {
-   "id": "gwraps",
-   "name": {
-    "pl": "Wrapy z Grilla",
-    "en": "Grill Wraps",
-    "ar": "رابات المشويات"
-   }
-  },
-  {
-   "id": "veg",
-   "name": {
-    "pl": "Wegetariańskie",
-    "en": "Vegetarian",
-    "ar": "نباتي"
-   }
-  },
-  {
-   "id": "hum",
-   "name": {
-    "pl": "Hummus",
-    "en": "Hummus",
-    "ar": "حمص"
-   }
-  },
-  {
-   "id": "side",
-   "name": {
-    "pl": "Dodatki",
-    "en": "Sides",
-    "ar": "إضافات"
-   }
-  },
-  {
-   "id": "dess",
-   "name": {
-    "pl": "Desery",
-    "en": "Desserts",
-    "ar": "حلويات"
-   }
-  },
-  {
-   "id": "drink",
-   "name": {
-    "pl": "Napoje Zimne",
-    "en": "Cold Drinks",
-    "ar": "مشروبات باردة"
-   }
-  },
-  {
-   "id": "juice",
-   "name": {
-    "pl": "Soki i Ajran",
-    "en": "Juices & Ayran",
-    "ar": "عصائر وعيران"
+    "pl": "Napoje",
+    "en": "Drinks",
+    "ar": "مشروبات"
    }
   }
  ],
  "items": [
   {
    "id": 1,
-   "cat": "wraps",
+   "cat": "starters",
    "hidden": false,
    "n": {
-    "pl": "Kebab Kurczak",
-    "en": "Chicken Kebab",
-    "ar": "شاورما دجاج"
+    "pl": "Przykładowa przystawka 1",
+    "en": "Sample starter 1",
+    "ar": "مقبلات تجريبية 1"
    },
    "d": {
-    "pl": "Kurczak, ogórek kiszony, krem czosnkowy.",
-    "en": "Chicken, pickled cucumber, garlic cream.",
-    "ar": "دجاج، مخلل خيار، كريمة الثوم."
+    "pl": "Opis dania – zmień go w panelu.",
+    "en": "Dish description – change it in the admin.",
+    "ar": "وصف الطبق – غيّره من لوحة التحكم."
    },
-   "img": "images/wrap_kurczak.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Duży",
-      "en": "Large",
-      "ar": "كبير"
-     },
-     "p": 32,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Mały",
-      "en": "Small",
-      "ar": "صغير"
-     },
-     "p": 19,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 2,
-   "cat": "wraps",
-   "hidden": false,
-   "n": {
-    "pl": "Kebab Wołowy",
-    "en": "Beef Kebab",
-    "ar": "شاورما لحم بقري"
-   },
-   "d": {
-    "pl": "Wołowina, pomidor, pietruszka, sumak, cebula, rzepa, sos tahini.",
-    "en": "Beef, tomato, parsley, sumac, onion, turnip, tahini sauce.",
-    "ar": "لحم بقري، طماطم، بقدونس، سماق، بصل، لفت، صوص طحينة."
-   },
-   "img": "images/wrap_wolowa.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Duży",
-      "en": "Large",
-      "ar": "كبير"
-     },
-     "p": 34,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Mały",
-      "en": "Small",
-      "ar": "صغير"
-     },
-     "p": 21,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 3,
-   "cat": "wraps",
-   "hidden": false,
-   "n": {
-    "pl": "Kebab Klasyczny",
-    "en": "Classic Kebab",
-    "ar": "شاورما كلاسيك"
-   },
-   "d": {
-    "pl": "Kurczak, wołowina lub mix, krem czosnkowy, ogórek kiszony, pomidor, sałata lodowa.",
-    "en": "Chicken, beef or mix, garlic cream, pickled cucumber, tomato, iceberg lettuce.",
-    "ar": "دجاج أو لحم بقري أو ميكس، كريمة الثوم، مخلل خيار، طماطم، خس."
-   },
-   "img": "images/wrap_klasyczna.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Wołowina · Mały",
-      "en": "Beef · Small",
-      "ar": "لحم بقري · صغير"
-     },
-     "p": 24,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Wołowina · Duży",
-      "en": "Beef · Large",
-      "ar": "لحم بقري · كبير"
-     },
-     "p": 36,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Kurczak · Mały",
-      "en": "Chicken · Small",
-      "ar": "دجاج · صغير"
-     },
-     "p": 24,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Kurczak · Duży",
-      "en": "Chicken · Large",
-      "ar": "دجاج · كبير"
-     },
-     "p": 36,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Mix · Mały",
-      "en": "Mix · Small",
-      "ar": "ميكس · صغير"
-     },
-     "p": 24,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Mix · Duży",
-      "en": "Mix · Large",
-      "ar": "ميكس · كبير"
-     },
-     "p": 36,
-     "img": ""
-    }
-   ],
-   "dv": 3
-  },
-  {
-   "id": 4,
-   "cat": "wraps",
-   "hidden": false,
-   "n": {
-    "pl": "Joker",
-    "en": "Joker",
-    "ar": "جوكر"
-   },
-   "d": {
-    "pl": "Chrupiący kurczak, wołowina lub mix z sekretnym sosem serowym i frytkami.",
-    "en": "Crispy chicken, beef or mix with secret cheese sauce and fries.",
-    "ar": "دجاج أو لحم أو ميكس مقرمش مع صوص الجبنة السري والبطاطس."
-   },
-   "img": "images/wrap_joker.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Kurczak",
-      "en": "Chicken",
-      "ar": "دجاج"
-     },
-     "p": 40,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Wołowina",
-      "en": "Beef",
-      "ar": "لحم بقري"
-     },
-     "p": 40,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Mix",
-      "en": "Mix",
-      "ar": "ميكس"
-     },
-     "p": 40,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 5,
-   "cat": "box",
-   "hidden": false,
-   "n": {
-    "pl": "Box Kurczak",
-    "en": "Chicken Box",
-    "ar": "بوكس دجاج"
-   },
-   "d": {
-    "pl": "Kurczak, krem czosnkowy, pieczywo opiekane. Do wyboru: ryż lub frytki, sałatka.",
-    "en": "Chicken, garlic cream, toasted bread. Choose rice or fries, salad.",
-    "ar": "دجاج، كريمة الثوم، خبز محمص. اختر أرز أو بطاطس، وسلطة."
-   },
-   "img": "images/p1.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 35,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 35,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 6,
-   "cat": "box",
-   "hidden": false,
-   "n": {
-    "pl": "Box Wołowina",
-    "en": "Beef Box",
-    "ar": "بوكس لحم بقري"
-   },
-   "d": {
-    "pl": "Wołowina, krem czosnkowy, pieczywo opiekane. Do wyboru: ryż lub frytki, sałatka.",
-    "en": "Beef, garlic cream, toasted bread. Choose rice or fries, salad.",
-    "ar": "لحم بقري، كريمة الثوم، خبز محمص. اختر أرز أو بطاطس، وسلطة."
-   },
-   "img": "images/p2.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 40,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 40,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 7,
-   "cat": "box",
-   "hidden": false,
-   "n": {
-    "pl": "Box Mix",
-    "en": "Mix Box",
-    "ar": "بوكس ميكس"
-   },
-   "d": {
-    "pl": "Kurczak i wołowina, krem czosnkowy, pieczywo opiekane. Do wyboru: ryż lub frytki, sałatka.",
-    "en": "Chicken and beef, garlic cream, toasted bread. Choose rice or fries, salad.",
-    "ar": "دجاج ولحم بقري، كريمة الثوم، خبز محمص. اختر أرز أو بطاطس، وسلطة."
-   },
-   "img": "images/p3.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 43,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 43,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 8,
-   "cat": "shaw",
-   "hidden": false,
-   "n": {
-    "pl": "Kebab Kurczak",
-    "en": "Chicken Kebab",
-    "ar": "شاورما دجاج"
-   },
-   "d": {
-    "pl": "6 kawałków kebaba z kurczaka, ryż lub frytki, krem czosnkowy, mix kiszonek, sałatka arabska.",
-    "en": "6 pieces of chicken kebab, rice or fries, garlic cream, pickle mix, Arabic salad.",
-    "ar": "6 قطع شاورما دجاج، أرز أو بطاطس، كريمة الثوم، مخللات مشكلة، سلطة عربي."
-   },
-   "img": "images/p5.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 40,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 40,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 9,
-   "cat": "shaw",
-   "hidden": false,
-   "n": {
-    "pl": "Kebab Wołowina",
-    "en": "Beef Kebab",
-    "ar": "شاورما لحم بقري"
-   },
-   "d": {
-    "pl": "6 kawałków kebaba z wołowiny, ryż lub frytki, tahini, mix kiszonek, sałatka arabska.",
-    "en": "6 pieces of beef kebab, rice or fries, tahini, pickle mix, Arabic salad.",
-    "ar": "6 قطع شاورما لحم بقري، أرز أو بطاطس، طحينة، مخللات مشكلة، سلطة عربي."
-   },
-   "img": "images/p6.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 44,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 44,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 10,
-   "cat": "shaw",
-   "hidden": false,
-   "n": {
-    "pl": "Kebab Mix",
-    "en": "Mix Kebab",
-    "ar": "شاورما ميكس"
-   },
-   "d": {
-    "pl": "3 kawałki kurczaka, 3 wołowiny, ryż lub frytki, krem czosnkowy, mix kiszonek, tahini, sałatka arabska.",
-    "en": "3 pieces of chicken, 3 of beef, rice or fries, garlic cream, pickle mix, tahini, Arabic salad.",
-    "ar": "3 قطع دجاج و3 لحم بقري، أرز أو بطاطس، كريمة الثوم، مخللات مشكلة، طحينة، سلطة عربي."
-   },
-   "img": "images/p7.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 46,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 46,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 11,
-   "cat": "shaw",
-   "hidden": false,
-   "n": {
-    "pl": "Duży Kebab Mix",
-    "en": "Large Mix Kebab",
-    "ar": "شاورما ميكس كبيرة"
-   },
-   "d": {
-    "pl": "6 kawałków kurczaka, 6 wołowiny, ryż lub frytki, tahini, krem czosnkowy, mix kiszonek, sałatka arabska.",
-    "en": "6 pieces of chicken, 6 of beef, rice or fries, tahini, garlic cream, pickle mix, Arabic salad.",
-    "ar": "6 قطع دجاج و6 لحم بقري، أرز أو بطاطس، طحينة، كريمة الثوم، مخللات مشكلة، سلطة عربي."
-   },
-   "img": "images/p4.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 80,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 80,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 12,
-   "cat": "grill",
-   "hidden": false,
-   "n": {
-    "pl": "Shish z kurczaka",
-    "en": "Chicken Shish",
-    "ar": "شيش دجاج"
-   },
-   "d": {
-    "pl": "2 szaszłyki marynowanego kurczaka grillowane. Podawane z: ryżem lub frytkami, sałatką, mix kiszonek, szaszłykiem warzywnym, sosem czosnkowym.",
-    "en": "2 grilled marinated chicken skewers. Served with: rice or fries, salad, pickle mix, vegetable skewer, garlic sauce.",
-    "ar": "سيخان من الدجاج المتبّل مشويان. يُقدَّم مع: أرز أو بطاطس، سلطة، مخللات مشكلة، سيخ خضار، صوص ثوم."
-   },
-   "img": "images/p15.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 46,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 46,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 13,
-   "cat": "grill",
-   "hidden": false,
-   "n": {
-    "pl": "Shish Kofta",
-    "en": "Shish Kofta",
-    "ar": "شيش كفتة"
-   },
-   "d": {
-    "pl": "2 szaszłyki grillowane, mielona wołowina z przyprawami. Podawane z: ryżem lub frytkami, sałatką, mix kiszonek, szaszłykiem warzywnym, tahini.",
-    "en": "2 grilled skewers of spiced minced beef. Served with: rice or fries, salad, pickle mix, vegetable skewer, tahini.",
-    "ar": "سيخان مشويان من اللحم المفروم المتبّل. يُقدَّم مع: أرز أو بطاطس، سلطة، مخللات مشكلة، سيخ خضار، طحينة."
-   },
-   "img": "images/p16.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 49,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 49,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 14,
-   "cat": "grill",
-   "hidden": false,
-   "n": {
-    "pl": "Shish Wołowina",
-    "en": "Beef Shish",
-    "ar": "شيش لحم بقري"
-   },
-   "d": {
-    "pl": "2 szaszłyki wołowiny grillowane. Podawane z: ryżem lub frytkami, sałatką, mix kiszonek, szaszłykiem warzywnym, tahini.",
-    "en": "2 grilled beef skewers. Served with: rice or fries, salad, pickle mix, vegetable skewer, tahini.",
-    "ar": "سيخان من اللحم البقري المشوي. يُقدَّم مع: أرز أو بطاطس، سلطة، مخللات مشكلة، سيخ خضار، طحينة."
-   },
-   "img": "images/p14.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 52,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 52,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 15,
-   "cat": "grill",
-   "hidden": false,
-   "n": {
-    "pl": "Kotleciki jagnięce",
-    "en": "Lamb Cutlets",
-    "ar": "ريش ضاني"
-   },
-   "d": {
-    "pl": "Grillowane kotleciki jagnięce.",
-    "en": "Grilled lamb cutlets.",
-    "ar": "ريش ضاني مشوية."
-   },
-   "img": "images/n_lamb.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 66.7,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 16,
-   "cat": "grill",
-   "hidden": false,
-   "n": {
-    "pl": "Mix Grill",
-    "en": "Mix Grill",
-    "ar": "ميكس مشاوي"
-   },
-   "d": {
-    "pl": "Szaszłyki z kofty, kurczak i wołowina. Podawane z: ryżem lub frytkami, sałatką, mix kiszonek, szaszłykiem warzywnym, kremem czosnkowym, tahini.",
-    "en": "Kofta skewers, chicken and beef. Served with: rice or fries, salad, pickle mix, vegetable skewer, garlic cream, tahini.",
-    "ar": "أسياخ كفتة ودجاج ولحم بقري. يُقدَّم مع: أرز أو بطاطس، سلطة، مخللات مشكلة، سيخ خضار، كريمة الثوم، طحينة."
-   },
-   "img": "images/p12.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 60,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 60,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 17,
-   "cat": "grill",
-   "hidden": false,
-   "n": {
-    "pl": "Vip Mix Grill",
-    "en": "VIP Mix Grill",
-    "ar": "في آي بي ميكس مشاوي"
-   },
-   "d": {
-    "pl": "Szaszłyki z kofty, shish z kurczaka, kawałki wołowiny, żeberka jagnięce. Podawane z: ryżem lub frytkami, sałatką, mix kiszonek, szaszłykiem warzywnym, kremem czosnkowym, tahini.",
-    "en": "Kofta skewers, chicken shish, beef pieces, lamb ribs. Served with: rice or fries, salad, pickle mix, vegetable skewer, garlic cream, tahini.",
-    "ar": "أسياخ كفتة، شيش دجاج، قطع لحم بقري، ريش ضاني. يُقدَّم مع: أرز أو بطاطس، سلطة، مخللات مشكلة، سيخ خضار، كريمة الثوم، طحينة."
-   },
-   "img": "images/p11.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Ryż",
-      "en": "Rice",
-      "ar": "أرز"
-     },
-     "p": 77,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Frytki",
-      "en": "Fries",
-      "ar": "بطاطس"
-     },
-     "p": 77,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 18,
-   "cat": "gwraps",
-   "hidden": false,
-   "n": {
-    "pl": "Shish z kurczaka",
-    "en": "Chicken Shish Wrap",
-    "ar": "راب شيش دجاج"
-   },
-   "d": {
-    "pl": "Kawałki marynowanego kurczaka grillowane na węglu. We wrapie z: sosem tahini, mix kiszonek, sałatką.",
-    "en": "Marinated chicken grilled over charcoal. In the wrap: tahini sauce, pickle mix, salad.",
-    "ar": "دجاج متبّل مشوي على الفحم. داخل الراب: طحينة، مخللات مشكلة، سلطة."
-   },
-   "img": "images/p9.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 36,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 19,
-   "cat": "gwraps",
-   "hidden": false,
-   "n": {
-    "pl": "Hawawshi",
-    "en": "Hawawshi",
-    "ar": "حواوشي"
-   },
-   "d": {
-    "pl": "Mielona wołowina grillowana z tajnymi egipskimi przyprawami, tahini, mix kiszonek, sałatka.",
-    "en": "Minced beef grilled with secret Egyptian spices, tahini, pickle mix, salad.",
-    "ar": "لحم مفروم مشوي بتوابل مصرية سرية، طحينة، مخللات مشكلة، سلطة."
-   },
-   "img": "images/p8.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 35,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 20,
-   "cat": "gwraps",
-   "hidden": false,
-   "n": {
-    "pl": "Shish Kofta",
-    "en": "Shish Kofta Wrap",
-    "ar": "راب شيش كفتة"
-   },
-   "d": {
-    "pl": "Grillowana kofta z tajną egipską przyprawą. We wrapie z: tahini, mix kiszonek, sałatką.",
-    "en": "Grilled kofta with a secret Egyptian spice blend. In the wrap: tahini, pickle mix, salad.",
-    "ar": "كفتة مشوية بخلطة توابل مصرية سرية. داخل الراب: طحينة، مخللات مشكلة، سلطة."
-   },
-   "img": "images/gw_kofta.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 39,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 21,
-   "cat": "gwraps",
-   "hidden": false,
-   "n": {
-    "pl": "Shish Wołowina",
-    "en": "Beef Shish Wrap",
-    "ar": "راب شيش لحم بقري"
-   },
-   "d": {
-    "pl": "Kawałki wołowiny grillowane na węglu. We wrapie z: tahini, mix kiszonek, sałatką.",
-    "en": "Beef pieces grilled over charcoal. In the wrap: tahini, pickle mix, salad.",
-    "ar": "قطع لحم بقري مشوية على الفحم. داخل الراب: طحينة، مخللات مشكلة، سلطة."
-   },
-   "img": "images/gw_wolowina.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 41,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 22,
-   "cat": "veg",
-   "hidden": false,
-   "n": {
-    "pl": "Wrap z frytkami",
-    "en": "Fries Wrap",
-    "ar": "راب بطاطس"
-   },
-   "d": {
-    "pl": "Frytki, ogórek, krem czosnkowy lub ketchup.",
-    "en": "Fries, cucumber, garlic cream or ketchup.",
-    "ar": "بطاطس، خيار، كريمة الثوم أو كاتشب."
-   },
-   "img": "images/n_wrap.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Krem czosnkowy",
-      "en": "Garlic cream",
-      "ar": "كريمة الثوم"
-     },
-     "p": 17,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Ketchup",
-      "en": "Ketchup",
-      "ar": "كاتشب"
-     },
-     "p": 17,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 23,
-   "cat": "veg",
-   "hidden": false,
-   "n": {
-    "pl": "Frytki serowe",
-    "en": "Cheesy Fries",
-    "ar": "بطاطس بالجبنة"
-   },
-   "d": {
-    "pl": "Frytki, ser, sos serowy, krem czosnkowy.",
-    "en": "Fries, cheese, cheese sauce, garlic cream.",
-    "ar": "بطاطس، جبنة، صوص جبنة، كريمة الثوم."
-   },
-   "img": "images/side_fries2.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 20,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 24,
-   "cat": "veg",
-   "hidden": false,
-   "n": {
-    "pl": "Frytki z sosem serowym i jalapeño",
-    "en": "Fries with Cheese Sauce & Jalapeño",
-    "ar": "بطاطس بصوص الجبنة والهالبينو"
-   },
-   "d": {
-    "pl": "Frytki z sosem serowym i papryczkami jalapeño.",
-    "en": "Fries with cheese sauce and jalapeño peppers.",
-    "ar": "بطاطس مع صوص الجبنة وفلفل هالبينو."
-   },
-   "img": "images/side_cheese.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 15,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 25,
-   "cat": "veg",
-   "hidden": false,
-   "n": {
-    "pl": "Wrap Falafel",
-    "en": "Falafel Wrap",
-    "ar": "راب فلافل"
-   },
-   "d": {
-    "pl": "Falafel, pomidor, ogórek, sałatka, tahini.",
-    "en": "Falafel, tomato, cucumber, salad, tahini.",
-    "ar": "فلافل، طماطم، خيار، سلطة، طحينة."
-   },
-   "img": "images/n_falafel.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 26,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 26,
-   "cat": "hum",
-   "hidden": false,
-   "n": {
-    "pl": "Talerz hummusu",
-    "en": "Hummus Plate",
-    "ar": "طبق حمص"
-   },
-   "d": {
-    "pl": "Hummus, pita, oliwa.",
-    "en": "Hummus, pita, olive oil.",
-    "ar": "حمص، خبز بيتا، زيت زيتون."
-   },
-   "img": "images/n_hummus.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 20,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 27,
-   "cat": "hum",
-   "hidden": false,
-   "n": {
-    "pl": "Hummus z mięsem",
-    "en": "Hummus with Meat",
-    "ar": "حمص باللحم"
-   },
-   "d": {
-    "pl": "Hummus, pita, kurczak lub wołowina, sałata.",
-    "en": "Hummus, pita, chicken or beef, lettuce.",
-    "ar": "حمص، خبز بيتا، دجاج أو لحم بقري، خس."
-   },
-   "img": "images/p10.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Kurczak",
-      "en": "Chicken",
-      "ar": "دجاج"
-     },
-     "p": 32,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Wołowina",
-      "en": "Beef",
-      "ar": "لحم بقري"
-     },
-     "p": 32,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 28,
-   "cat": "side",
-   "hidden": false,
-   "n": {
-    "pl": "Sałatka arabska",
-    "en": "Arabic Salad",
-    "ar": "سلطة عربي"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/n_salad.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 10,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 29,
-   "cat": "side",
-   "hidden": false,
-   "n": {
-    "pl": "Frytki duże",
-    "en": "Large Fries",
-    "ar": "بطاطس كبيرة"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/side_fries.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 10,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 30,
-   "cat": "side",
-   "hidden": false,
-   "n": {
-    "pl": "Ryż",
-    "en": "Rice",
-    "ar": "أرز"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/n_rice.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 8,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 31,
-   "cat": "side",
-   "hidden": false,
-   "n": {
-    "pl": "Dodatkowy ser",
-    "en": "Extra Cheese",
-    "ar": "جبنة إضافية"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/n_cheese.jpg",
+   "img": "",
    "v": [
     {
      "l": {
@@ -1144,119 +54,20 @@
    ]
   },
   {
-   "id": 32,
-   "cat": "side",
+   "id": 2,
+   "cat": "starters",
    "hidden": false,
    "n": {
-    "pl": "Dodatkowy sos",
-    "en": "Extra Sauce",
-    "ar": "صوص إضافي"
+    "pl": "Przykładowa przystawka 2",
+    "en": "Sample starter 2",
+    "ar": "مقبلات تجريبية 2"
    },
    "d": {
-    "pl": "Wybierz sos.",
-    "en": "Choose a sauce.",
-    "ar": "اختر الصوص."
+    "pl": "Opis dania – zmień go w panelu.",
+    "en": "Dish description – change it in the admin.",
+    "ar": "وصف الطبق – غيّره من لوحة التحكم."
    },
-   "img": "images/n_garlic.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Krem czosnkowy",
-      "en": "Garlic cream",
-      "ar": "كريمة الثوم"
-     },
-     "p": 3,
-     "img": "images/n_garlic.jpg"
-    },
-    {
-     "l": {
-      "pl": "Tahini",
-      "en": "Tahini",
-      "ar": "طحينة"
-     },
-     "p": 3,
-     "img": "images/n_tahini.jpg"
-    },
-    {
-     "l": {
-      "pl": "Sos serowy",
-      "en": "Cheese sauce",
-      "ar": "صوص جبنة"
-     },
-     "p": 3,
-     "img": "images/n_cheese.jpg"
-    },
-    {
-     "l": {
-      "pl": "Hummus",
-      "en": "Hummus",
-      "ar": "حمص"
-     },
-     "p": 3,
-     "img": "images/n_hummus_sauce.jpg"
-    },
-    {
-     "l": {
-      "pl": "Ketchup",
-      "en": "Ketchup",
-      "ar": "كاتشب"
-     },
-     "p": 3,
-     "img": "images/n_ketchup.jpg"
-    },
-    {
-     "l": {
-      "pl": "Sos granatowy",
-      "en": "Pomegranate sauce",
-      "ar": "صوص الرمان"
-     },
-     "p": 3,
-     "img": "images/n_sos_dark.jpg"
-    }
-   ]
-  },
-  {
-   "id": 33,
-   "cat": "side",
-   "hidden": false,
-   "n": {
-    "pl": "Kiszonki",
-    "en": "Pickles",
-    "ar": "مخللات"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/side_pickles.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 3,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 34,
-   "cat": "side",
-   "hidden": false,
-   "n": {
-    "pl": "Tostowany chleb",
-    "en": "Toasted Bread",
-    "ar": "خبز محمص"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/n_pita.jpg",
+   "img": "",
    "v": [
     {
      "l": {
@@ -1270,570 +81,138 @@
    ]
   },
   {
-   "id": 35,
-   "cat": "dess",
+   "id": 3,
+   "cat": "mains",
    "hidden": false,
    "n": {
-    "pl": "Baklawa",
-    "en": "Baklava",
-    "ar": "بقلاوة"
+    "pl": "Przykładowe danie 1",
+    "en": "Sample main 1",
+    "ar": "طبق رئيسي تجريبي 1"
    },
    "d": {
-    "pl": "Orientalny deser z ciasta filo i orzechów.",
-    "en": "Oriental dessert of filo pastry and nuts.",
-    "ar": "حلوى شرقية من عجينة الفيلو والمكسرات."
+    "pl": "Opis dania – zmień go w panelu.",
+    "en": "Dish description – change it in the admin.",
+    "ar": "وصف الطبق – غيّره من لوحة التحكم."
    },
-   "img": "images/n_baklava.jpg",
+   "img": "",
    "v": [
     {
      "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 9,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 36,
-   "cat": "dess",
-   "hidden": false,
-   "n": {
-    "pl": "Basbosa",
-    "en": "Basbousa",
-    "ar": "بسبوسة"
-   },
-   "d": {
-    "pl": "Delikatne ciasto z semoliny, nasączone syropem.",
-    "en": "Soft semolina cake soaked in syrup.",
-    "ar": "كيك ناعم من السميد مسقي بالشراب."
-   },
-   "img": "images/n_basbosa.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 7,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 37,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "Pepsi",
-    "en": "Pepsi",
-    "ar": "بيبسي"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_pepsi.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "0,33 l",
-      "en": "0.33 l",
-      "ar": "0.33 لتر"
-     },
-     "p": 7,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "0,5 l",
-      "en": "0.5 l",
-      "ar": "0.5 لتر"
-     },
-     "p": 9,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 38,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "Pepsi Zero",
-    "en": "Pepsi Zero",
-    "ar": "بيبسي زيرو"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_pepsizero.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "0,33 l",
-      "en": "0.33 l",
-      "ar": "0.33 لتر"
-     },
-     "p": 7,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "0,5 l",
-      "en": "0.5 l",
-      "ar": "0.5 لتر"
-     },
-     "p": 9,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 39,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "Mirinda",
-    "en": "Mirinda",
-    "ar": "ميرندا"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_mirinda.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "0,33 l",
-      "en": "0.33 l",
-      "ar": "0.33 لتر"
-     },
-     "p": 7,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "0,5 l",
-      "en": "0.5 l",
-      "ar": "0.5 لتر"
-     },
-     "p": 9,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 40,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "7UP",
-    "en": "7UP",
-    "ar": "سفن أب"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_7up.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "0,33 l",
-      "en": "0.33 l",
-      "ar": "0.33 لتر"
-     },
-     "p": 7,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "0,5 l",
-      "en": "0.5 l",
-      "ar": "0.5 لتر"
-     },
-     "p": 9,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 44,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "Lipton Zielona Herbata 0,5 l",
-    "en": "Lipton Green Tea 0.5 l",
-    "ar": "ليبتون شاي أخضر 0.5 لتر"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_lipton.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 8,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 45,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "Lipton Brzoskwinia 0,5 l",
-    "en": "Lipton Peach Iced Tea 0.5 l",
-    "ar": "ليبتون شاي مثلج بالخوخ 0.5 لتر"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_lipton.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "",
-      "en": "",
-      "ar": ""
-     },
-     "p": 8,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 46,
-   "cat": "drink",
-   "hidden": false,
-   "n": {
-    "pl": "Kryształ Zdrój 0,5 l",
-    "en": "Kryształ Zdrój Water 0.5 l",
-    "ar": "مياه كريشتال زدروي 0.5 لتر"
-   },
-   "d": {
-    "pl": "",
-    "en": "",
-    "ar": ""
-   },
-   "img": "images/d_water.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Gazowana",
-      "en": "Sparkling",
-      "ar": "غازية"
-     },
-     "p": 6,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Niegazowana",
-      "en": "Still",
-      "ar": "عادية"
-     },
-     "p": 6,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 48,
-   "cat": "juice",
-   "hidden": false,
-   "n": {
-    "pl": "Soki Toma 0,33 l",
-    "en": "Toma Juices 0.33 l",
-    "ar": "عصائر توما 0.33 لتر"
-   },
-   "d": {
-    "pl": "Wybierz smak.",
-    "en": "Choose a flavour.",
-    "ar": "اختر النكهة."
-   },
-   "img": "images/d_toma.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Pomarańczowy",
-      "en": "Orange",
-      "ar": "برتقال"
-     },
-     "p": 7,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Jabłkowy",
-      "en": "Apple",
-      "ar": "تفاح"
-     },
-     "p": 7,
-     "img": "images/n_toma_apple.jpg"
-    },
-    {
-     "l": {
-      "pl": "Multiwitamina",
-      "en": "Multivitamin",
-      "ar": "متعدد الفيتامينات"
-     },
-     "p": 7,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Czarna porzeczka",
-      "en": "Blackcurrant",
-      "ar": "كشمش أسود"
-     },
-     "p": 7,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 49,
-   "cat": "juice",
-   "hidden": false,
-   "n": {
-    "pl": "Sok Rani Float 240 ml",
-    "en": "Rani Float Juice 240 ml",
-    "ar": "عصير راني فلوت 240 مل"
-   },
-   "d": {
-    "pl": "Naturalny napój owocowy z kawałkami owoców w środku. Wybierz smak.",
-    "en": "Natural fruit drink with real fruit pieces. Choose a flavour.",
-    "ar": "مشروب فواكه طبيعي بقطع فاكهة حقيقية. اختر النكهة."
-   },
-   "img": "images/d_rani.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Mango",
-      "en": "Mango",
-      "ar": "مانجو"
-     },
-     "p": 8,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Pomarańcza",
-      "en": "Orange",
-      "ar": "برتقال"
-     },
-     "p": 8,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Ananas",
-      "en": "Pineapple",
-      "ar": "أناناس"
-     },
-     "p": 8,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Brzoskwinia",
-      "en": "Peach",
-      "ar": "خوخ"
-     },
-     "p": 8,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Truskawka–Banan",
-      "en": "Strawberry–Banana",
-      "ar": "فراولة وموز"
-     },
-     "p": 8,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Guawa",
-      "en": "Guava",
-      "ar": "جوافة"
-     },
-     "p": 8,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Cocktail",
-      "en": "Cocktail",
-      "ar": "كوكتيل"
-     },
-     "p": 8,
-     "img": "images/n_rani_cocktail.jpg"
-    }
-   ]
-  },
-  {
-   "id": 50,
-   "cat": "juice",
-   "hidden": false,
-   "n": {
-    "pl": "Ajran",
-    "en": "Ayran",
-    "ar": "عيران"
-   },
-   "d": {
-    "pl": "Naturalny ajran, orzeźwiający napój jogurtowy.",
-    "en": "Natural ayran, a refreshing yoghurt drink.",
-    "ar": "عيران طبيعي، مشروب لبن منعش."
-   },
-   "img": "images/n_ayran.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "Naturalny",
-      "en": "Natural",
-      "ar": "طبيعي"
-     },
-     "p": 10,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Mango",
-      "en": "Mango",
-      "ar": "مانجو"
-     },
-     "p": 11,
-     "img": ""
-    }
-   ]
-  },
-  {
-   "id": 52,
-   "cat": "chicken",
-   "hidden": false,
-   "n": {
-    "pl": "Kurczak z rożna bez dodatków",
-    "en": "Rotisserie Chicken, plain",
-    "ar": "فرخة مشوية بدون إضافات"
-   },
-   "d": {
-    "pl": "Sam kurczak z rożna, bez dodatków.",
-    "en": "Rotisserie chicken on its own, no sides.",
-    "ar": "فرخة مشوية على السيخ لوحدها، بدون إضافات."
-   },
-   "img": "images/grill-chicken.jpg",
-   "v": [
-    {
-     "l": {
-      "pl": "½",
-      "en": "½",
-      "ar": "نص"
+      "pl": "Duże",
+      "en": "Large",
+      "ar": "كبير"
      },
      "p": 30,
      "img": ""
     },
     {
      "l": {
-      "pl": "Cały",
-      "en": "Whole",
-      "ar": "كاملة"
+      "pl": "Małe",
+      "en": "Small",
+      "ar": "صغير"
      },
-     "p": 50,
+     "p": 20,
      "img": ""
     }
    ]
   },
   {
-   "id": 53,
-   "cat": "chicken",
+   "id": 4,
+   "cat": "mains",
    "hidden": false,
    "n": {
-    "pl": "Kurczak z rożna z dodatkami",
-    "en": "Rotisserie Chicken with Sides",
-    "ar": "فرخة مشوية بالإضافات"
+    "pl": "Przykładowe danie 2",
+    "en": "Sample main 2",
+    "ar": "طبق رئيسي تجريبي 2"
    },
    "d": {
-    "pl": "Soczysty kurczak z rożna, podawany z ryżem lub frytkami, surówką, tahini, kiszonymi warzywami i sosem czosnkowym (toum).",
-    "en": "Juicy rotisserie chicken, served with rice or fries, salad, tahini, pickles and garlic sauce (toum).",
-    "ar": "فرخة مشوية طرية على السيخ، تُقدَّم مع أرز أو بطاطس، سلطة، طحينة، مخلل وثومية."
+    "pl": "Opis dania – zmień go w panelu.",
+    "en": "Dish description – change it in the admin.",
+    "ar": "وصف الطبق – غيّره من لوحة التحكم."
    },
-   "img": "images/grill-chicken.jpg",
+   "img": "",
    "v": [
     {
      "l": {
-      "pl": "½ · z ryżem",
-      "en": "½ · with rice",
-      "ar": "نص · مع رز"
+      "pl": "",
+      "en": "",
+      "ar": ""
      },
-     "p": 40,
+     "p": 35,
      "img": ""
-    },
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "cat": "drinks",
+   "hidden": false,
+   "n": {
+    "pl": "Przykładowy napój 1",
+    "en": "Sample drink 1",
+    "ar": "مشروب تجريبي 1"
+   },
+   "d": {
+    "pl": "",
+    "en": "",
+    "ar": ""
+   },
+   "img": "",
+   "v": [
     {
      "l": {
-      "pl": "½ · z frytkami",
-      "en": "½ · with fries",
-      "ar": "نص · مع بطاطس"
+      "pl": "",
+      "en": "",
+      "ar": ""
      },
-     "p": 40,
+     "p": 6,
      "img": ""
-    },
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "cat": "drinks",
+   "hidden": false,
+   "n": {
+    "pl": "Przykładowy napój 2",
+    "en": "Sample drink 2",
+    "ar": "مشروب تجريبي 2"
+   },
+   "d": {
+    "pl": "",
+    "en": "",
+    "ar": ""
+   },
+   "img": "",
+   "v": [
     {
      "l": {
-      "pl": "Cały · z ryżem",
-      "en": "Whole · with rice",
-      "ar": "كاملة · مع رز"
+      "pl": "",
+      "en": "",
+      "ar": ""
      },
-     "p": 70,
-     "img": ""
-    },
-    {
-     "l": {
-      "pl": "Cały · z frytkami",
-      "en": "Whole · with fries",
-      "ar": "كاملة · مع بطاطس"
-     },
-     "p": 70,
+     "p": 8,
      "img": ""
     }
    ]
   }
  ],
  "settings": {
-  "whatsapp": "48500002249",
-  "restaurant": "GRILL HUB",
-  "brand": "Grill Hub",
+  "whatsapp": "",
+  "restaurant": "MY RESTAURANT",
+  "brand": "My Restaurant",
   "color": "#e11e26",
   "logo": "",
-  "default_lang": "pl",
+  "default_lang": "en",
   "standalone": true,
   "orders": false,
   "orders_wa": true,
   "kitchen_pin": "",
   "receipt": {
    "paper": "80",
-   "header": "GRILL HUB",
-   "footer": "Dziekujemy!",
+   "header": "MY RESTAURANT",
+   "footer": "Thank you!",
    "copies": 1,
    "cut": true,
    "method": "rawbt",
@@ -1846,7 +225,7 @@
   "animations": true
  },
  "builder": {
-  "enabled": true,
+  "enabled": false,
   "base": {
    "kurczak": {
     "Duży": 32,
@@ -1865,5 +244,5 @@
   "pickle": 3
  },
  "strings": {},
- "next_id": 54
+ "next_id": 7
 }

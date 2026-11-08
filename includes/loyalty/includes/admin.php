@@ -12,8 +12,8 @@ function ls_admin_menu() {
 	// differ — without this, clicking "Grill Hub" would open Loyalty instead.
 	add_submenu_page(
 		'grill-hub-menu',
-		__( 'Grill Hub Menu', 'grill-hub-menu' ),
-		__( 'Grill Hub', 'grill-hub-menu' ),
+		__( 'Restaurant Menu', 'grill-hub-menu' ),
+		__( 'Restaurant Menu', 'grill-hub-menu' ),
 		'manage_options',
 		'grill-hub-menu',
 		'ghm_admin_page'

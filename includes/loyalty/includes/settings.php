@@ -4,11 +4,16 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+/** Business name used until one is typed in Loyalty > Settings: the restaurant name from the menu settings. */
+function ls_default_brand() {
+	return function_exists( 'ghm_brand' ) ? ghm_brand() : 'Restaurant';
+}
+
 /** Default settings array. */
 function ls_default_settings() {
 	$defaults = array(
 		// General.
-		'business_name'        => 'Grill Hub',
+		'business_name'        => ls_default_brand(),
 		'theme'                => 'light', // light = like the menu, dark = like the home page
 		// Staff panel PIN (hashed on seed).
 		'staff_pin_hash'       => '',

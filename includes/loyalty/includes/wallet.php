@@ -198,8 +198,8 @@ function ls_wallet_logo_source() {
 	if ( file_exists( $cached ) ) {
 		return $cached;
 	}
-	// Try the Grill Hub logo once and cache it.
-	$res = wp_remote_get( 'https://grillhub.pl/wp-content/plugins/grill-hub-menu/assets/images/logo-new.png', array( 'timeout' => 15 ) );
+	// Try the plugin's default logo once and cache it.
+	$res = wp_remote_get( GHM_URL . 'assets/images/logo-new.png', array( 'timeout' => 15 ) );
 	if ( ! is_wp_error( $res ) && 200 === (int) wp_remote_retrieve_response_code( $res ) ) {
 		$body = wp_remote_retrieve_body( $res );
 		if ( strlen( $body ) > 1000 ) {

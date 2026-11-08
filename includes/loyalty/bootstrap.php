@@ -91,6 +91,8 @@ function ls_frontend_data() {
 		'vapidKey'  => ls_setting( 'vapid_public', '' ),
 		'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
 		'staffNonce' => wp_create_nonce( 'ls_staff' ),
+		'logo'       => GHM_URL . 'assets/images/logo-new.png',
+		'brand'      => (string) ls_setting( 'business_name', ls_default_brand() ),
 		// QR image provider. {data} is replaced with the encoded URL. Filter: ls_qr_image_url.
 		'qrUrl'      => apply_filters( 'ls_qr_image_url', 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data={data}' ),
 		'i18n'       => array(

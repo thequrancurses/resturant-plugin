@@ -23,7 +23,7 @@ function ls_tpl( $key, $vars = array(), $customer_id = 0 ) {
 	$replace = array_merge(
 		array(
 			'name'  => $name,
-			'store' => ls_setting( 'business_name', 'Grill Hub' ),
+			'store' => ls_setting( 'business_name', ls_default_brand() ),
 		),
 		$vars
 	);
@@ -248,7 +248,7 @@ function ls_send_email_notification( $n, $customer ) {
 	if ( ! $customer || ! $customer->email ) {
 		return 'no email address';
 	}
-	$subject = '[' . ls_setting( 'business_name', 'Grill Hub' ) . '] ' . $n->title;
+	$subject = '[' . ls_setting( 'business_name', ls_default_brand() ) . '] ' . $n->title;
 	$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 	return wp_mail( $customer->email, $subject, ls_email_html( $n, $customer ), $headers ) ? true : 'wp_mail failed';
 }
@@ -265,7 +265,7 @@ function ls_email_html( $n, $customer ) {
 	);
 	$lang  = isset( $L[ $customer->lang ] ) ? $customer->lang : ( function_exists( 'ls_default_lang' ) ? ls_default_lang() : 'pl' );
 	$t     = $L[ $lang ];
-	$brand = (string) ls_setting( 'business_name', 'Grill Hub' );
+	$brand = (string) ls_setting( 'business_name', ls_default_brand() );
 	$logo  = function_exists( 'ls_logo_url' ) ? ls_logo_url() : '';
 	$state = function_exists( 'ls_wallet_card_state' ) ? ls_wallet_card_state( (int) $customer->id ) : null;
 	$card_url = function_exists( 'ls_card_url' ) ? ls_card_url( $customer->token ) : home_url( '/' );

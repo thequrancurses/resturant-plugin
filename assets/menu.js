@@ -2,9 +2,9 @@
 (function () {
   /* ---------- Data (comes from the WordPress admin) ---------- */
   var D = window.GHM_DATA || {}, S = D.settings || {}, BASE = window.GHM_BASE || "";
-  var CASHIER = String(S.whatsapp || "48500002249").replace(/\D/g, "");
-  var RESTAURANT = S.restaurant || "GRILL HUB";
-  var PHONE = (CASHIER.length === 11 && CASHIER.indexOf("48") === 0) ? "+48 " + CASHIER.slice(2, 5) + " " + CASHIER.slice(5, 8) + " " + CASHIER.slice(8) : "+" + CASHIER;
+  var CASHIER = String(S.whatsapp || "").replace(/\D/g, "");
+  var RESTAURANT = S.restaurant || "MY RESTAURANT";
+  var PHONE = (CASHIER.length === 11 && CASHIER.indexOf("48") === 0) ? "+48 " + CASHIER.slice(2, 5) + " " + CASHIER.slice(5, 8) + " " + CASHIER.slice(8) : (CASHIER ? "+" + CASHIER : "");
 
   var LANGS = { ar: "العربية", pl: "Polski", en: "English" };
   var LANG = LANGS[S.default_lang] ? S.default_lang : "pl";
@@ -419,7 +419,7 @@
   });
   $("q").addEventListener("input", function () { query = this.value; $("qx").hidden = !query; renderMenu(); });
   $("qx").addEventListener("click", function () { $("q").value = ""; query = ""; this.hidden = true; renderMenu(); $("q").focus(); });
-  // phones: the search is a small magnifier; tapping it opens the field and hides the "GRILL HUB" text (it comes back when the search is closed)
+  // phones: the search is a small magnifier; tapping it opens the field and hides the restaurant name text (it comes back when the search is closed)
   (function () {
     var row = document.querySelector(".row1"), q = $("q");
     function sync() { row.classList.toggle("srch", document.activeElement === q || !!q.value); }

@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: Restaurant Menu & Ordering
- * Description: Interactive QR menu and WhatsApp ordering (Polish / English / Arabic) with a "build your own wrap" builder. Edit categories, dishes, prices, photos, texts and settings from the admin. Use the shortcode [grill_hub_menu] on a page, and [grill_hub_home] for the 3-button home page.
- * Version: 1.17.40
- * Author: Grill Hub
+ * Description: Interactive QR menu and WhatsApp ordering for restaurants (Polish / English / Arabic) with a "build your own wrap" builder, kitchen orders and loyalty stamps. Edit categories, dishes, prices, photos, texts and settings from the admin. Use the shortcode [grill_hub_menu] on a page, and [grill_hub_home] for the 3-button home page.
+ * Version: 1.18.0
+ * Author: Your Name
  * License: GPLv2 or later
  * Text Domain: grill-hub-menu
  */
 if (!defined('ABSPATH')) exit;
 
-define('GHM_VER', '1.17.40');
+define('GHM_VER', '1.18.0');
 define('GHM_DIR', plugin_dir_path(__FILE__));
 define('GHM_URL', plugin_dir_url(__FILE__));
 define('GHM_OPT', 'ghm_data');
@@ -32,24 +32,24 @@ function ghm_defaults() {
 /* ----------------------------------------------- business info, hours, SEO */
 function ghm_biz_defaults() {
     $h = array();
-    for ($d = 0; $d < 7; $d++) $h[] = array('on' => true, 'open' => '10:00', 'close' => ($d === 4 || $d === 5) ? '02:00' : '00:00'); // Mon..Sun; Fri + Sat open until 02:00
+    for ($d = 0; $d < 7; $d++) $h[] = array('on' => true, 'open' => '10:00', 'close' => '22:00'); // Mon..Sun (edit in Settings > Opening hours)
     return array(
-        'address' => '3 Maja 21', 'city' => 'Katowice', 'postal' => '', 'phone' => '', 'maps_url' => '',
+        'address' => '', 'city' => '', 'postal' => '', 'phone' => '', 'maps_url' => '',
         'hours' => $h, 'closed_mode' => 'block', 'show_status' => true,
-        'seo_title' => '', 'seo_desc' => '', 'seo_title_en' => '', 'seo_desc_en' => '', 'og_image' => '', 'lat' => '50.25975', 'lng' => '19.01687',
-        'upsell_on' => true, 'upsell_ids' => array(29, 37, 50),
+        'seo_title' => '', 'seo_desc' => '', 'seo_title_en' => '', 'seo_desc_en' => '', 'og_image' => '', 'lat' => '', 'lng' => '',
+        'upsell_on' => true, 'upsell_ids' => array(),
         'prep_on' => true, 'prep_min' => 20, 'home_btn' => true,
         'combo' => array(
-            'on' => false, 'main_cats' => array('wraps', 'gwraps', 'box', 'build'), 'drink_cats' => array('drink', 'juice'), 'off' => 3,
+            'on' => false, 'main_cats' => array(), 'drink_cats' => array(), 'off' => 3,
             'win' => array('from' => '', 'to' => '', 'days' => array(0, 1, 2, 3, 4, 5, 6)),
-            'label' => array('pl' => 'Zestaw: wrap + napój', 'en' => 'Combo: wrap + drink', 'ar' => 'عرض: راب + مشروب'),
+            'label' => array('pl' => 'Zestaw: danie + napój', 'en' => 'Combo: main + drink', 'ar' => 'عرض: وجبة + مشروب'),
         ),
         'bundle' => array(
-            'on' => false, 'n' => 2, 'price' => 30, 'cats' => array('wraps', 'gwraps'), 'inc' => array(), 'exc' => array(),
+            'on' => false, 'n' => 2, 'price' => 30, 'cats' => array(), 'inc' => array(), 'exc' => array(),
             'win' => array('from' => '', 'to' => '', 'days' => array(0, 1, 2, 3, 4, 5, 6)),
-            'label' => array('pl' => 'Oferta: 2 kanapki za 30 zł', 'en' => 'Deal: 2 sandwiches for 30 zł', 'ar' => 'عرض: 2 ساندوتش بـ 30 زلوتي'),
+            'label' => array('pl' => 'Oferta: 2 dania za 30 zł', 'en' => 'Deal: 2 dishes for 30 zł', 'ar' => 'عرض: 2 طبق بـ 30 زلوتي'),
         ),
-        'fees' => array('dep_on' => true, 'dep' => 0.5, 'dep_cats' => array('drink', 'juice'), 'pack_on' => true, 'pack' => 2),
+        'fees' => array('dep_on' => false, 'dep' => 0.5, 'dep_cats' => array(), 'pack_on' => false, 'pack' => 2),
         'gift' => array('on' => false, 'popup' => true, 'tiers' => array(array('min' => 50, 'id' => 0, 'vi' => 0)), 'win' => array('from' => '', 'to' => '', 'days' => array(0, 1, 2, 3, 4, 5, 6))),
         'wait' => array('next_on' => false, 'next_code' => '', 'next_text' => array('pl' => '10% zniżki na następne zamówienie', 'en' => '10% off your next order', 'ar' => 'خصم 10% على طلبك القادم'), 'follow_on' => true, 'review_on' => true, 'rewards_on' => true),
         'coupons' => array(),
@@ -170,40 +170,38 @@ function ghm_home_defaults() {
     return array(
         'enabled'    => true,
         'standalone' => true,
-        'root'       => true,
+        'root'       => false,
         'embers'     => true,
         'show_lang'  => true,
-        'menu_url'   => 'https://grillhub.pl/order/',
-        'badge'      => $l('Katowice · Kebab & Grill', 'Katowice · Kebab & Grill', 'كاتوفيتسه · شاورما ومشاوي'),
-        'title'      => $l('Poczuj smak ognia', 'Taste the fire', 'تذوّق النار'),
-        'tagline'    => $l('Świeży grill, prawdziwy smak. Wybierz, co chcesz zrobić.', 'Fresh grill, real flavour. Choose what you want to do.', 'مشاوي طازجة وطعم حقيقي. اختر ما تريد.'),
+        'menu_url'   => '',
+        'badge'      => $l('Restauracja', 'Restaurant', 'مطعم'),
+        'title'      => $l('Witamy', 'Welcome', 'أهلاً بكم'),
+        'tagline'    => $l('Świeże jedzenie, prawdziwy smak. Wybierz, co chcesz zrobić.', 'Fresh food, real flavour. Choose what you want to do.', 'طعام طازج وطعم حقيقي. اختر ما تريد.'),
         'notice_show' => false,
         'notice'     => $l('Dziś zamykamy wcześniej.', 'We close earlier today.', 'نُغلق مبكرًا اليوم.'),
-        'footer'     => $l('Grill Hub · Katowice', 'Grill Hub · Katowice', 'مشاوي هاب · كاتوفيتسه'),
+        'footer'     => $l('Moja restauracja', 'My Restaurant', 'مطعمي'),
         'social'     => array(
-            array('id' => 'facebook', 'show' => true, 'url' => 'https://www.facebook.com/grillhub'),
-            array('id' => 'instagram', 'show' => true, 'url' => 'https://www.instagram.com/grillhub.pl/'),
-            array('id' => 'tiktok', 'show' => true, 'url' => 'https://www.tiktok.com/@grillhub.pl'),
+            array('id' => 'facebook', 'show' => false, 'url' => ''),
+            array('id' => 'instagram', 'show' => false, 'url' => ''),
+            array('id' => 'tiktok', 'show' => false, 'url' => ''),
         ),
         'delivery'   => array(
-            array('id' => 'wolt', 'show' => true, 'url' => 'https://wolt.com/pl/pol/aglomeracja-slaska/restaurant/grill-hub-katowice'),
-            array('id' => 'ubereats', 'show' => true, 'url' => 'https://www.ubereats.com/pl/store/grill-hub/sM80iwlhSy6aZXPAFOYL8Q'),
-            array('id' => 'pyszne', 'show' => true, 'url' => 'https://www.pyszne.pl/menu/grill-hub-katowice?serviceType=delivery'),
-            array('id' => 'bolt', 'show' => true, 'url' => 'https://food.bolt.eu/en/352-silesia/p/922497-grill-hub/'),
-            array('id' => 'glovo', 'show' => true, 'url' => 'https://glovoapp.com/pl/pl/katowice/stores/grill-hub-ktw'),
+            array('id' => 'wolt', 'show' => false, 'url' => ''),
+            array('id' => 'ubereats', 'show' => false, 'url' => ''),
+            array('id' => 'pyszne', 'show' => false, 'url' => ''),
+            array('id' => 'bolt', 'show' => false, 'url' => ''),
+            array('id' => 'glovo', 'show' => false, 'url' => ''),
         ),
-        'about_title' => $l('Kebab i grill w Katowicach', 'Kebab & grill in Katowice', 'شاورما ومشاوي في كاتوفيتسه'),
-        'about'      => $l('Grill Hub to kebab, shawarma, wrapy i dania z grilla w centrum Katowic, przy ul. 3 Maja 21. Kurczak i wołowina, własny wrap z wybranych dodatków, hummus i desery. Zamów online lub odbierz osobiście – otwarte codziennie od 10:00, w piątki i soboty do 02:00.',
-                           'Grill Hub serves kebab, shawarma, wraps and grilled dishes in the centre of Katowice, at 3 Maja 21. Chicken and beef, build-your-own wraps, hummus and desserts. Order online or pick up in person – open daily from 10:00, until 02:00 on Fridays and Saturdays.',
-                           'مشاوي هاب: شاورما ولفائف ومشويات في وسط كاتوفيتسه، 3 Maja 21. دجاج ولحم، وابنِ لفتك بنفسك، مع حمص وحلويات. اطلب أونلاين أو استلم بنفسك – نفتح يوميًا من 10:00، والجمعة والسبت حتى 02:00.'),
+        'about_title' => $l('O nas', 'About us', 'من نحن'),
+        'about'      => $l('Napisz tutaj kilka zdań o swojej restauracji (Ustawienia strony głównej).', 'Write a few sentences about your restaurant here (Home page settings).', 'اكتب هنا بضع جمل عن مطعمك (إعدادات الصفحة الرئيسية).'),
         'buttons'    => array(
             array('id' => 'order', 'show' => true, 'icon' => 'bag', 'style' => 'fire', 'new_tab' => false, 'url' => '{menu}',
                 'label' => $l('Zamów teraz', 'Order now', 'اطلب الآن'),
                 'sub'   => $l('Otwórz menu i złóż zamówienie', 'Open the menu and place your order', 'افتح المنيو وابدأ طلبك')),
-            array('id' => 'rewards', 'show' => true, 'icon' => 'gift', 'style' => 'gold', 'new_tab' => false, 'url' => 'https://app.stampstamp.pl/51SlB5',
+            array('id' => 'rewards', 'show' => false, 'icon' => 'gift', 'style' => 'gold', 'new_tab' => false, 'url' => '',
                 'label' => $l('Odbierz nagrody', 'Get Rewards', 'احصل على المكافآت'),
                 'sub'   => $l('Zbieraj pieczątki i odbieraj nagrody', 'Collect stamps and earn rewards', 'اجمع الأختام واحصل على مكافآت')),
-            array('id' => 'review', 'show' => true, 'icon' => 'star', 'style' => 'glass', 'new_tab' => false, 'url' => 'https://g.page/r/CXfGJdWcRKNeEBM/review',
+            array('id' => 'review', 'show' => false, 'icon' => 'star', 'style' => 'glass', 'new_tab' => false, 'url' => '',
                 'label' => $l('Oceń nas', 'Rate us', 'قيّمنا'),
                 'sub'   => $l('Zostaw opinię w Google', 'Leave a review on Google', 'شاركنا رأيك على جوجل')),
             array('id' => 'call', 'show' => true, 'icon' => 'phone', 'style' => 'gold', 'new_tab' => false, 'url' => '{tel}',
@@ -234,7 +232,7 @@ function ghm_get_data() {
     $def['home'] = ghm_home_defaults();
     $raw = get_option(GHM_OPT, '');
     $cur = is_string($raw) && $raw !== '' ? json_decode($raw, true) : null;
-    if (!is_array($cur)) return $def;
+    if (!is_array($cur)) { ghm_mark_migrations(); return $def; }
     $cur['settings'] = array_merge($def['settings'], isset($cur['settings']) && is_array($cur['settings']) ? $cur['settings'] : array());
     $cur['settings']['receipt'] = array_merge($def['settings']['receipt'], is_array($cur['settings']['receipt']) ? $cur['settings']['receipt'] : array());
     $b = isset($cur['builder']) && is_array($cur['builder']) ? $cur['builder'] : array();
@@ -429,6 +427,39 @@ function ghm_get_data() {
     }
     return $cur;
 }
+// The one-time migrations below were written for the original Grill Hub menu (they add / reshape specific dishes and set its map position).
+// A menu that starts from the neutral defaults (fresh install, reset, or a loaded preset) must never run them, so they are marked as done.
+function ghm_mark_migrations() {
+    if (get_option('ghm_gen_init')) return;
+    foreach (array('ghm_pl_default', 'ghm_arwords', 'ghm_mix130', 'ghm_mix131', 'ghm_btn181', 'ghm_btn16', 'ghm_lat1728', 'ghm_grillchicken1733', 'ghm_grillchicken1734', 'ghm_rozna1739') as $f) add_option($f, 1, '', false);
+    update_option('ghm_gen_init', 1, false);
+}
+/* ------------------------------------------------------------ sample-data presets */
+// Ready-made menus that can be loaded from Restaurant Menu > Backup. Each one is a full snapshot (menu, prices, photos, settings, home page) in presets/<slug>.json.
+function ghm_presets() {
+    $all = array('grill-hub' => 'Grill Hub (Katowice kebab & grill) - the original menu with all dishes, photos and settings');
+    $out = array();
+    foreach ($all as $slug => $label) if (is_readable(GHM_DIR . 'presets/' . $slug . '.json')) $out[$slug] = $label;
+    return $out;
+}
+function ghm_ajax_load_preset() {
+    if (!current_user_can('manage_options')) wp_send_json_error('forbidden', 403);
+    check_ajax_referer('ghm_admin', 'nonce');
+    $slug = isset($_POST['preset']) ? sanitize_key(wp_unslash($_POST['preset'])) : '';
+    $list = ghm_presets();
+    if (!isset($list[$slug])) wp_send_json_error('unknown preset', 400);
+    $d = json_decode((string) file_get_contents(GHM_DIR . 'presets/' . $slug . '.json'), true);
+    if (!is_array($d) || empty($d['items']) || empty($d['cats'])) wp_send_json_error('bad preset', 500);
+    ghm_mark_migrations();
+    update_option(GHM_OPT, ghm_json($d), false);
+    wp_send_json_success(ghm_get_data());
+}
+add_action('wp_ajax_ghm_load_preset', 'ghm_ajax_load_preset');
+// the business name used when a section has no name of its own (Loyalty cards, notifications, e-mails)
+function ghm_brand() {
+    $d = ghm_get_data();
+    return !empty($d['settings']['brand']) ? $d['settings']['brand'] : 'Restaurant';
+}
 function ghm_json($v) {
     return wp_json_encode($v, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE);
 }
@@ -594,8 +625,8 @@ function ghm_clean($in) {
     $lang = isset($s['default_lang']) ? $s['default_lang'] : 'pl';
     $out['settings'] = array(
         'whatsapp'     => preg_replace('/\D/', '', isset($s['whatsapp']) ? $s['whatsapp'] : '') ?: $def['settings']['whatsapp'],
-        'restaurant'   => sanitize_text_field(isset($s['restaurant']) ? $s['restaurant'] : '') ?: 'GRILL HUB',
-        'brand'        => sanitize_text_field(isset($s['brand']) ? $s['brand'] : '') ?: 'Grill Hub',
+        'restaurant'   => sanitize_text_field(isset($s['restaurant']) ? $s['restaurant'] : '') ?: $def['settings']['restaurant'],
+        'brand'        => sanitize_text_field(isset($s['brand']) ? $s['brand'] : '') ?: $def['settings']['brand'],
         'color'        => sanitize_hex_color(isset($s['color']) ? $s['color'] : '') ?: '#e11e26',
         'logo'         => ghm_img(isset($s['logo']) ? $s['logo'] : ''),
         'default_lang' => in_array($lang, array('pl', 'en', 'ar'), true) ? $lang : 'pl',
@@ -1269,7 +1300,7 @@ add_action('template_redirect', 'ghm_standalone', 0); // before WordPress' own 4
 
 /* --------------------------------------------------------------- admin */
 function ghm_admin_menu() {
-    add_menu_page('Grill Hub Menu', 'Grill Hub', 'manage_options', 'grill-hub-menu', 'ghm_admin_page', 'dashicons-food', 58);
+    add_menu_page('Restaurant Menu', 'Restaurant Menu', 'manage_options', 'grill-hub-menu', 'ghm_admin_page', 'dashicons-food', 58);
 }
 add_action('admin_menu', 'ghm_admin_menu');
 
@@ -1288,6 +1319,7 @@ function ghm_admin_assets($hook) {
         'homeUrl' => ghm_find_home() ? get_permalink(ghm_find_home()) : '',
         'kitchenUrl' => home_url('/?ghm-kitchen=1'),
         'siteUrl' => home_url('/'),
+        'presets' => (object) ghm_presets(),
         'cpUsed' => (object) (is_array(get_option('ghm_cp_used', array())) ? get_option('ghm_cp_used', array()) : array()),
     );
     wp_add_inline_script('ghm-admin', 'window.GHM_ADMIN=' . ghm_json($cfg) . ';', 'before');
@@ -1320,7 +1352,7 @@ function ghm_ajax_mkhome() {
     if (!current_user_can('manage_options')) wp_send_json_error('forbidden', 403);
     check_ajax_referer('ghm_admin', 'nonce');
     $id = ghm_find_home();
-    if (!$id) $id = wp_insert_post(array('post_title' => 'Home', 'post_name' => 'grill-hub-home', 'post_content' => '[grill_hub_home]', 'post_status' => 'publish', 'post_type' => 'page'));
+    if (!$id) $id = wp_insert_post(array('post_title' => 'Home', 'post_name' => 'home', 'post_content' => '[grill_hub_home]', 'post_status' => 'publish', 'post_type' => 'page'));
     wp_send_json_success(array('url' => $id ? get_permalink($id) : ''));
 }
 add_action('wp_ajax_ghm_mkhome', 'ghm_ajax_mkhome');
@@ -1354,7 +1386,7 @@ function ghm_activate() {
         wp_insert_post(array('post_title' => 'Order', 'post_name' => 'order', 'post_content' => '[grill_hub_menu]', 'post_status' => 'publish', 'post_type' => 'page'));
     }
     if (!ghm_find_home()) {
-        wp_insert_post(array('post_title' => 'Home', 'post_name' => 'grill-hub-home', 'post_content' => '[grill_hub_home]', 'post_status' => 'publish', 'post_type' => 'page'));
+        wp_insert_post(array('post_title' => 'Home', 'post_name' => 'home', 'post_content' => '[grill_hub_home]', 'post_status' => 'publish', 'post_type' => 'page'));
     }
 }
 register_activation_hook(__FILE__, 'ghm_activate');
@@ -1362,7 +1394,7 @@ register_activation_hook(__FILE__, 'ghm_activate');
 
 /* ------------------------------------------------------------- orders */
 add_action('init', function () {
-    register_post_type('ghm_order', array('public' => false, 'show_ui' => false, 'supports' => array('title'), 'label' => 'Grill Hub orders'));
+    register_post_type('ghm_order', array('public' => false, 'show_ui' => false, 'supports' => array('title'), 'label' => 'Restaurant orders'));
     // Flush rewrite rules on plugin update (file replacement doesn't trigger activation).
     // This keeps /wp-json/ and custom routes working after an update.
     if (get_option('ghm_ver') !== GHM_VER) {
@@ -1884,11 +1916,11 @@ function ghm_alert_send($text, $a, $block = false) {
         $res[] = 'WhatsApp: ' . ($block ? $chk($r) : 'sent');
     }
     if ($a['ntfy_topic'] !== '') {
-        $r = wp_remote_post(rtrim($a['ntfy_server'], '/') . '/' . rawurlencode($a['ntfy_topic']), array_merge($args, array('body' => $text, 'headers' => array('Title' => 'Grill Hub - new order', 'Priority' => 'urgent', 'Tags' => 'rotating_light', 'Click' => home_url('/?ghm-kitchen=1')))));
+        $r = wp_remote_post(rtrim($a['ntfy_server'], '/') . '/' . rawurlencode($a['ntfy_topic']), array_merge($args, array('body' => $text, 'headers' => array('Title' => ghm_brand() . ' - new order', 'Priority' => 'urgent', 'Tags' => 'rotating_light', 'Click' => home_url('/?ghm-kitchen=1')))));
         $res[] = 'ntfy: ' . ($block ? $chk($r) : 'sent');
     }
     if ($a['email'] !== '') {
-        $ok = wp_mail($a['email'], 'Grill Hub - nowe zamowienie (kuchnia offline)', $text);
+        $ok = wp_mail($a['email'], ghm_brand() . ' - nowe zamowienie (kuchnia offline)', $text);
         $res[] = 'E-mail: ' . ($ok ? 'OK' : 'error');
     }
     return $res;
@@ -1915,7 +1947,7 @@ function ghm_ajax_alert_test() {
     check_ajax_referer('ghm_admin', 'nonce');
     $d = ghm_get_data(); $a = $d['settings']['alert'];
     if ($a['wa_phone'] === '' && $a['ntfy_topic'] === '' && $a['email'] === '') wp_send_json_error('Nothing to test: save a WhatsApp / ntfy / e-mail setting first.');
-    wp_send_json_success(ghm_alert_send('TEST - Grill Hub: alerts work. ' . home_url('/?ghm-kitchen=1'), $a, true));
+    wp_send_json_success(ghm_alert_send('TEST - ' . ghm_brand() . ': alerts work. ' . home_url('/?ghm-kitchen=1'), $a, true));
 }
 add_action('wp_ajax_ghm_alert_test', 'ghm_ajax_alert_test');
 

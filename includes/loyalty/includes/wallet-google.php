@@ -131,7 +131,7 @@ function ls_google_ensure_class() {
 	if ( is_wp_error( $token ) ) {
 		return $token;
 	}
-	$business = ls_setting( 'business_name', 'Grill Hub' );
+	$business = ls_setting( 'business_name', ls_default_brand() );
 	$body     = array(
 		'id'                => ls_google_class_id(),
 		'issuerName'        => $business,

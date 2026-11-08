@@ -204,7 +204,7 @@ function ls_db_seed() {
 		$wpdb->insert(
 			"{$p}ls_programs",
 			array(
-				'name'             => __( 'Grill Hub Loyalty Card', 'loyalty-stamps' ),
+				'name'             => ls_default_brand() . ' ' . __( 'Loyalty Card', 'loyalty-stamps' ),
 				'description'      => __( 'Collect stamps with every visit. Complete the card and get your reward!', 'loyalty-stamps' ),
 				'stamps_required'  => 8,
 				'reward_title'     => __( 'Free meal', 'loyalty-stamps' ),
@@ -224,8 +224,8 @@ function ls_db_seed() {
 		$wpdb->insert(
 			"{$p}ls_stores",
 			array(
-				'name'       => 'Grill Hub',
-				'address'    => 'Katowice, Poland',
+				'name'       => ls_default_brand(),
+				'address'    => '',
 				'radius_km'  => 1.00,
 				'active'     => 1,
 				'created_at' => $now,

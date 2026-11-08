@@ -110,7 +110,7 @@
       var L = LY || {}, LS = L.st || {};
       var open = !!S.orders;
       function stat(n, l) { return '<div class="ghm-stat"><b>' + h(n == null ? "–" : n) + "</b><span>" + h(l) + "</span></div>"; }
-      return '<div class="ghm-dash-hero"><h2><span class="fl">🔥</span> ' + h(S.brand || "Grill Hub") + '</h2>' +
+      return '<div class="ghm-dash-hero"><h2><span class="fl">🔥</span> ' + h(S.brand || "Restaurant Menu") + '</h2>' +
         '<p>Control deck — everything for your restaurant in one place.</p>' +
         '<span class="ghm-open-pill ' + (open ? "open" : "closed") + '"><i></i>' + (open ? "Website ordering ON" : "Website ordering OFF") + "</span></div>" +
         '<div class="ghm-stats">' +
@@ -176,7 +176,7 @@
       function ck(path, label, desc) { return '<label class="ck"><input type="checkbox" data-p="' + path + '" data-t="bool"' + (getP(path) ? " checked" : "") + "> " + label + "</label>" + (desc ? '<p class="description">' + h(desc) + "</p>" : ""); }
       function sel(path, opts) { var v = getP(path); return '<select data-p="' + path + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (v === o[0] ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select>"; }
       var status = CFG.homeUrl
-        ? '<p>Home page address: <code>' + h(CFG.homeUrl) + '</code> <a class="button" target="_blank" href="' + h(CFG.homeUrl) + '">Open ↗</a></p><p class="description">With “Use it as the website front page” ticked below, the site address itself (<code>https://grillhub.pl/</code>) shows this page. You can also put the shortcode <code>[grill_hub_home]</code> on any page.</p>'
+        ? '<p>Home page address: <code>' + h(CFG.homeUrl) + '</code> <a class="button" target="_blank" href="' + h(CFG.homeUrl) + '">Open ↗</a></p><p class="description">With “Use it as the website front page” ticked below, the site address itself (<code>' + h(CFG.siteUrl || "") + '</code>) shows this page. You can also put the shortcode <code>[grill_hub_home]</code> on any page.</p>'
         : '<p>No page with the shortcode <code>[grill_hub_home]</code> exists yet. <button class="button button-primary" id="ghm-mkhome" type="button">Create the Home page</button></p>';
       var SN = { facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok" }, DN = { wolt: "Wolt", ubereats: "Uber Eats", pyszne: "Pyszne.pl", bolt: "Bolt Food", glovo: "Glovo" };
       function linkRows(key, title, names) {
@@ -196,7 +196,7 @@
           ck(p + "new_tab", "Open in a new tab") + '<span class="sp"></span><button class="button" data-hup="' + i + '">↑</button><button class="button" data-hdn="' + i + '">↓</button><button class="button button-link-delete" data-hdel="' + i + '">Delete</button></div></div></details>';
       }).join("");
       return '<div class="card ghm-card"><h3>Home page</h3>' + status +
-        "<p>" + ck("home.enabled", "<b>Home page is on</b>", "Untick to switch the home page off (the shortcode then shows nothing).") + ck("home.root", "<b>Use it as the website front page</b> (grillhub.pl)", "On: opening the site address itself shows this page with the 3 buttons, no matter what is set in Settings → Reading.") + ck("home.standalone", "Show it without the theme header and footer (recommended)") + ck("home.embers", "Rising sparks animation") + ck("home.show_lang", "Show the language switcher (PL / EN / AR)") + '</p><p><span class="lb">Menu page address</span><input type="text" class="large-text" data-p="home.menu_url" value="' + h(H.menu_url || "") + '" placeholder="https://grillhub.pl/order/"></p><p class="description">Where the <code>{menu}</code> link of the “Order now” button goes. The menu itself is the page that contains <code>[grill_hub_menu]</code> (your <b>/order/</b> page).</p></div>' +
+        "<p>" + ck("home.enabled", "<b>Home page is on</b>", "Untick to switch the home page off (the shortcode then shows nothing).") + ck("home.root", "<b>Use it as the website front page</b> (your site address)", "On: opening the site address itself shows this page with the 3 buttons, no matter what is set in Settings → Reading.") + ck("home.standalone", "Show it without the theme header and footer (recommended)") + ck("home.embers", "Rising sparks animation") + ck("home.show_lang", "Show the language switcher (PL / EN / AR)") + '</p><p><span class="lb">Menu page address</span><input type="text" class="large-text" data-p="home.menu_url" value="' + h(H.menu_url || "") + '" placeholder="https://your-site.com/order/"></p><p class="description">Where the <code>{menu}</code> link of the “Order now” button goes. The menu itself is the page that contains <code>[grill_hub_menu]</code> (your <b>/order/</b> page).</p></div>' +
         '<div class="card ghm-card"><h3>Heading</h3>' + l3("home.badge", "Small badge above the title") + l3("home.title", "Main title") + l3("home.tagline", "Text under the title", true) + "</div>" +
         '<div class="card ghm-card"><h3>About text (for Google)</h3><p class="description">A short paragraph shown at the bottom of the home page. Keep the words people search for: kebab, grill, shawarma, wraps and your city.</p>' + l3("home.about_title", "Heading") + l3("home.about", "Paragraph", true) + "</div>" +
         '<div class="card ghm-card"><h3>Temporary notice</h3><p class="description">A highlighted line above the buttons — e.g. holiday hours, “kitchen closes at 21:00”.</p><p>' + ck("home.notice_show", "<b>Show the notice</b>") + "</p>" + l3("home.notice", "Notice text", true) + "</div>" +
@@ -207,7 +207,7 @@
     },
     settings: function () {
       return '<div class="card ghm-card"><h3>General</h3><table class="form-table"><tbody>' +
-        row("WhatsApp number (with country code, digits only)", inp("settings.whatsapp"), "Orders are sent to this number. Example: 48500002249") +
+        row("WhatsApp number (with country code, digits only)", inp("settings.whatsapp"), "Orders are sent to this number. Example: 48501234567") +
         row("Name in the order message", inp("settings.restaurant"), "Shown at the top of the WhatsApp message") +
         row("Name shown in the header", inp("settings.brand")) +
         row("Main colour", inp("settings.color", { type: "color" })) +
@@ -234,7 +234,7 @@
         return '<select data-p="settings.upsell_ids.' + n + '"><option value="">— none —</option>' + DATA.items.map(function (it) { return '<option value="' + it.id + '"' + (String(it.id) === cur ? " selected" : "") + ">" + h(it.n.pl || "(no name)") + " · " + h(it.v[0] ? it.v[0].p : "") + " zł</option>"; }).join("") + "</select>";
       };
       return '<div class="card ghm-card"><h3>Restaurant details</h3><p class="description">Used for the address and the map button on the home page, and for Google (search results and Google Maps).</p><table class="form-table"><tbody>' +
-        row("Street and number", inp("settings.address", { ph: "3 Maja 21" })) + row("Postal code (optional)", inp("settings.postal", { ph: "40-096" }), "Helps Google match the address. Leave empty if unsure.") + row("City", inp("settings.city")) +
+        row("Street and number", inp("settings.address", { ph: "Main Street 1" })) + row("Postal code (optional)", inp("settings.postal", { ph: "40-096" }), "Helps Google match the address. Leave empty if unsure.") + row("City", inp("settings.city")) +
         row("Phone number", inp("settings.phone", { ph: "+48 500 002 249" }), "Used by the “Call us” button. Leave empty to use the WhatsApp number from Settings.") +
         row("Google Maps link (optional)", inp("settings.maps_url", { ph: "https://maps.app.goo.gl/…" }), "Leave empty and the button opens Google Maps with your address. Paste the “Share” link of your Google Maps listing here if you want it to open that exact listing.") +
         "</tbody></table></div>" +
@@ -245,9 +245,9 @@
         row("Home page badge", ck("settings.show_status", "Show “Open now / Closed” on the home page"), "Always uses the hours above, whatever the time on the visitor’s phone.") +
         "</tbody></table></div>" +
         '<div class="card ghm-card"><h3>Google &amp; sharing (SEO)</h3><p class="description">Description, preview image and restaurant data for the home page. Address, phone and hours above are also sent to Google as structured “Restaurant” data.</p><table class="form-table"><tbody>' +
-        row("Page title", inp("settings.seo_title", { ph: "Grill Hub Katowice – Kebab, Shawarma & Grill · 3 Maja 21" }), "Leave empty for the automatic title (shown above).") +
+        row("Page title", inp("settings.seo_title", { ph: "Your Restaurant City – Kebab & Grill · Main Street 1" }), "Leave empty for the automatic title (shown above).") +
         row("Description", inp("settings.seo_desc", { area: true }), "About 150 characters show in Google. Leave empty for an automatic description built from your details.") +
-        row("English page title (/en/)", inp("settings.seo_title_en", { ph: "Kebab & Grill in Katowice – Grill Hub | 3 Maja 21" }), "The English home page is at your-site/en/. Leave empty for the automatic title.") +
+        row("English page title (/en/)", inp("settings.seo_title_en", { ph: "Kebab & Grill in City – Your Restaurant | Main Street 1" }), "The English home page is at your-site/en/. Leave empty for the automatic title.") +
         row("English description (/en/)", inp("settings.seo_desc_en", { area: true })) +
         row("Map coordinates (optional)", "Latitude " + inp("settings.lat", { ph: "50.2600" }) + " Longitude " + inp("settings.lng", { ph: "19.0200" }), "Right-click your restaurant on Google Maps and copy the two numbers. Helps Google place the restaurant exactly.") +
         row("Sharing image", imgField("settings.og_image", "Shown when the link is shared (WhatsApp, Facebook…). 1200×630 px works best. Leave empty for the default."), "") +
@@ -321,11 +321,11 @@
         '<div class="card ghm-card"><h3>Alert when the kitchen page is not open</h3><p class="description">The kitchen page reports it is alive every few seconds. When an order arrives and the kitchen page has been silent (tablet off / page closed / no internet), the plugin sends an alert to your phone. You can use one or more channels.</p><table class="form-table"><tbody>' +
         row("When to alert", '<select data-p="settings.alert.mode"><option value="offline"' + (A.mode === "offline" ? " selected" : "") + '>Only when the kitchen page is offline (recommended)</option><option value="always"' + (A.mode === "always" ? " selected" : "") + '>Every order</option><option value="off"' + (A.mode === "off" ? " selected" : "") + ">Never</option></select>") +
         row("Offline after (seconds)", inp("settings.alert.offline_s", { num: true }), "Also used as a re-check: an order nobody opened within this time triggers the alert. 30–900.") +
-        row("WhatsApp: your number", inp("settings.alert.wa_phone", { ph: "48500002249" }), "Free via CallMeBot: send “I allow callmebot to send me messages” to +34 644 51 95 23 on WhatsApp; it replies with your API key.") + row("WhatsApp: API key", inp("settings.alert.wa_key")) +
+        row("WhatsApp: your number", inp("settings.alert.wa_phone", { ph: "48501234567" }), "Free via CallMeBot: send “I allow callmebot to send me messages” to +34 644 51 95 23 on WhatsApp; it replies with your API key.") + row("WhatsApp: API key", inp("settings.alert.wa_key")) +
         row("Phone push (ntfy) topic", inp("settings.alert.ntfy_topic", { ph: "grillhub-kitchen-xyz123" }), "Free app “ntfy” (Android / iPhone): subscribe to this topic name (choose a long random one). Alerts arrive as urgent notifications that can ring loudly.") + row("ntfy server", inp("settings.alert.ntfy_server")) +
         row("E-mail", inp("settings.alert.email", { ph: "you@example.com" })) + "</tbody></table><p><button class=\"button\" id=\"ghm-alerttest\" type=\"button\">Send a test alert</button> <span id=\"ghm-alertres\" class=\"description\">Save first, then test.</span></p>" +
         '<p class="description"><b>Please note:</b> a normal WhatsApp message cannot ring like a phone call, and WhatsApp alerts depend on the free CallMeBot service. For the loudest alarm install ntfy on the owner’s phone. The tablet itself should stay on the kitchen page with the screen awake.</p></div>' +
-        '<div class="card ghm-card"><h3>Ideas to fill the quiet hours</h3><ul style="list-style:disc;margin:0 18px"><li><b>Afternoon combo</b>: wrap + drink −3 zł, only 14:00–17:00 (set above). Post it on Instagram and the home page badge shows it automatically.</li><li><b>First order</b>: coupon <code>WELCOME10</code> (10%, 1 use) on flyers and in the Instagram bio link <code>?code=WELCOME10</code>.</li><li><b>QR on the table</b>: “Order from your seat” plus a free upgrade (fries) when ordering by QR in the afternoon.</li><li><b>Late-night</b> (Fri/Sat after midnight): a small combo discount for students and night workers.</li><li><b>Delivery apps → direct</b>: put a flyer in bags: “Order directly: code <code>DIRECT5</code> = −5 zł”. You save the app commission.</li><li><b>Review boost</b>: after a happy order, tap the “Review” button on the home page; fresh Google reviews raise your ranking.</li><li><b>Group deal</b>: 3 wraps + 3 drinks code <code>TEAM</code> for offices around 3 Maja during lunch.</li></ul></div>';
+        '<div class="card ghm-card"><h3>Ideas to fill the quiet hours</h3><ul style="list-style:disc;margin:0 18px"><li><b>Afternoon combo</b>: wrap + drink −3 zł, only 14:00–17:00 (set above). Post it on Instagram and the home page badge shows it automatically.</li><li><b>First order</b>: coupon <code>WELCOME10</code> (10%, 1 use) on flyers and in the Instagram bio link <code>?code=WELCOME10</code>.</li><li><b>QR on the table</b>: “Order from your seat” plus a free upgrade (fries) when ordering by QR in the afternoon.</li><li><b>Late-night</b> (Fri/Sat after midnight): a small combo discount for students and night workers.</li><li><b>Delivery apps → direct</b>: put a flyer in bags: “Order directly: code <code>DIRECT5</code> = −5 zł”. You save the app commission.</li><li><b>Review boost</b>: after a happy order, tap the “Review” button on the home page; fresh Google reviews raise your ranking.</li><li><b>Group deal</b>: 3 wraps + 3 drinks code <code>TEAM</code> for offices near your restaurant during lunch.</li></ul></div>';
     },
     stats: function () {
       if (!ST) { loadStats(); return '<div class="card ghm-card"><p>Loading statistics…</p></div>'; }
@@ -397,9 +397,14 @@
         }).join("") + "</tbody></table></div>";
     },
     tools: function () {
+      var presetHTML = function () {
+        var ks = Object.keys(CFG.presets || {}); if (!ks.length) return "";
+        return '<h3>Sample data</h3><p>Fill the whole menu (dishes, photos, prices, texts, settings and home page) with a ready-made example. It replaces what is there now and is saved straight away, so download a backup first if you need the current menu.</p><p>' +
+          ks.map(function (k) { return '<button class="button" data-preset="' + h(k) + '">Load: ' + h(CFG.presets[k]) + '</button>'; }).join(" ") + '</p>';
+      };
       return '<div class="card ghm-card"><h3>Backup</h3><p>Download all menu data as a file, or load a file you saved before. After loading, press <b>Save changes</b>.</p>' +
         '<p><button class="button" id="ghm-export">Download backup (.json)</button> <label class="button">Load backup… <input type="file" id="ghm-import" accept=".json,application/json" hidden></label></p>' +
-        '<h3>Reset</h3><p>Restore the original menu (dishes, prices, texts and settings). This cannot be undone.</p><p><button class="button button-link-delete" id="ghm-reset">Reset everything to defaults</button></p></div>';
+        presetHTML() + '<h3>Reset</h3><p>Restore the empty starter menu (dishes, prices, texts and settings). This cannot be undone.</p><p><button class="button button-link-delete" id="ghm-reset">Reset everything to defaults</button></p></div>';
     }
   };
   function row(label, field, desc) { return "<tr><th scope=\"row\">" + h(label) + "</th><td>" + field + (desc ? '<p class="description">' + h(desc) + "</p>" : "") + "</td></tr>"; }
@@ -435,7 +440,7 @@
       '<table class="ghm-t"><tbody>' + (cps.map(function (x) { return "<tr><td><code>" + h(x.c) + "</code></td><td><b>" + x.n + "</b> orders</td></tr>"; }).join("") || '<tr><td class="ghm-empty">No coupon used yet.</td></tr>') + "</tbody></table></div>";
   }
   function linksCard() {
-    var site = CFG.siteUrl || "https://grillhub.pl/", menu = CFG.pageUrl || site + "order/";
+    var site = CFG.siteUrl || "/", menu = CFG.pageUrl || site + "order/";
     function u(base, src, extra) { return base + (base.indexOf("?") > -1 ? "&" : "?") + "src=" + src + (extra || ""); }
     var L = [["QR code on the tables (open the menu)", u(menu, "qr"), "Add &t=7 for table 7: the table number is filled in for the customer. Make one QR per table, or one for all."], ["Instagram bio link", u(site, "instagram")], ["Facebook page “website” / posts", u(site, "facebook")], ["TikTok bio link", u(site, "tiktok")],
       ["Google Business Profile – website", u(site, "gbp")], ["Google Business Profile – “Order” / menu link", u(menu, "gbporder")], ["WhatsApp status / broadcast", u(site, "whatsapp")], ["Flyers and print", u(site, "flyer")]];
@@ -592,15 +597,22 @@
   $(root).on("click", "[data-loytab]", function () { st.loyTab = this.getAttribute("data-loytab"); render(); });
   $(root).on("click", "#ghm-export", function () {
     var blob = new Blob([JSON.stringify(DATA, null, 1)], { type: "application/json" }), a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = "grill-hub-menu-backup.json"; document.body.appendChild(a); a.click(); a.remove();
+    a.href = URL.createObjectURL(blob); a.download = "restaurant-menu-backup.json"; document.body.appendChild(a); a.click(); a.remove();
   });
   $(root).on("change", "#ghm-import", function () {
     var f = this.files[0]; if (!f) return; var r = new FileReader();
     r.onload = function () { try { var d = JSON.parse(r.result); if (!d.items || !d.cats) throw 0; DATA = d; dirty(); render(); alert("Backup loaded. Press “Save changes” to apply it."); } catch (e) { alert("This is not a valid backup file."); } };
     r.readAsText(f);
   });
+  $(root).on("click", "[data-preset]", function () {
+    var k = $(this).attr("data-preset");
+    if (!confirm("Replace the whole menu with this sample data? Your current menu will be overwritten.")) return;
+    $.post(CFG.ajax, { action: "ghm_load_preset", preset: k, nonce: CFG.nonce }).done(function (r) {
+      if (r && r.success) { DATA = r.data; st.dirty = false; st.cat = ""; render(); alert("Sample data loaded."); } else { alert("Could not load the sample data."); }
+    }).fail(function () { alert("Could not load the sample data."); });
+  });
   $(root).on("click", "#ghm-reset", function () {
-    if (!confirm("Reset the whole menu to the original version?")) return;
+    if (!confirm("Reset the whole menu to the empty starter version?")) return;
     $.post(CFG.ajax, { action: "ghm_reset", nonce: CFG.nonce }).done(function (r) { if (r && r.success) { DATA = r.data; st.dirty = false; st.cat = ""; render(); } });
   });
   window.addEventListener("beforeunload", function (e) { if (st.dirty) { e.preventDefault(); e.returnValue = ""; } });
