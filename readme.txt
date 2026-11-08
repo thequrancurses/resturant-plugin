@@ -1,4 +1,4 @@
-=== Grill Hub Menu ===
+=== Restaurant Menu & Ordering ===
 Contributors: grillhub
 Requires at least: 5.8
 Tested up to: 6.6

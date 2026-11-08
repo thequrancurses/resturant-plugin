@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Grill Hub Menu
+ * Plugin Name: Restaurant Menu & Ordering
  * Description: Interactive QR menu and WhatsApp ordering (Polish / English / Arabic) with a "build your own wrap" builder. Edit categories, dishes, prices, photos, texts and settings from the admin. Use the shortcode [grill_hub_menu] on a page, and [grill_hub_home] for the 3-button home page.
  * Version: 1.17.40
  * Author: Grill Hub
