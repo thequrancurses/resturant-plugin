@@ -1,0 +1,92 @@
+<div id="app" dir="ltr" lang="pl">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+    <g id="s-tom"><rect x="-6" y="-6" width="12" height="12" rx="3" fill="#e23b2e"/><rect x="-4" y="-4" width="5" height="4" rx="2" fill="#f58a77" opacity=".7"/><circle cx="2" cy="2" r="1" fill="#f5c06a"/></g>
+    <g id="s-tom2"><rect x="-4" y="-4" width="8" height="8" rx="2" fill="#e23b2e"/><rect x="-2.6" y="-2.6" width="3.4" height="2.6" rx="1.2" fill="#f58a77" opacity=".7"/></g>
+    <g id="s-cuc2"><rect x="-4" y="-4" width="8" height="8" rx="2" fill="#78b54e"/><rect x="-2.6" y="-2.6" width="3.4" height="2.6" rx="1.2" fill="#b7dc8c" opacity=".8"/></g>
+    <g id="s-par"><path d="M0 7C-6 4-7-3-3-6 0-4 0-4 3-6 7-3 6 4 0 7z" fill="#2f8f3a"/><path d="M0 6V-3" stroke="#1d6b2a" stroke-width="1"/></g>
+    <g id="s-oni"><path d="M-8 3A8 8 0 0 1 8 3" fill="none" stroke="#ead3ee" stroke-width="3" stroke-linecap="round"/><path d="M-5 3A5 5 0 0 1 5 3" fill="none" stroke="#c58bb8" stroke-width="1.5" stroke-linecap="round"/></g>
+    <g id="s-let"><path d="M-10 0q2.5-6 5 0t5 0 5 0 5 0" fill="none" stroke="#6fc13f" stroke-width="4.5" stroke-linecap="round"/><path d="M-9 -1q2.5-5 5 0t5 0 5 0 4 0" fill="none" stroke="#a6e07a" stroke-width="1.4" stroke-linecap="round"/></g>
+    <g id="s-pic"><circle r="7" fill="#4e8f3a"/><circle r="5" fill="#a6d16a"/><circle cx="-2" cy="-1" r=".9" fill="#e8f4bb"/><circle cx="2" cy="1.5" r=".9" fill="#e8f4bb"/><circle cx="1" cy="-2.5" r=".8" fill="#e8f4bb"/></g>
+    <g id="s-fry"><rect x="-8" y="-2.2" width="16" height="4.4" rx="1.8" fill="#f2bf3a"/><rect x="-7" y="-1.4" width="9" height="1.3" rx=".65" fill="#ffe08a" opacity=".85"/></g>
+    <g id="s-chz"><path d="M-7 4.5L7 4.5L7 -4.5Z" fill="#f6c230"/><path d="M-7 4.5L7 4.5L7 2.4L-7 2.4Z" fill="#e0a21a"/><circle cx="3" cy="0.8" r="1.2" fill="#e0a21a"/></g>
+    <g id="s-tur"><rect x="-9" y="-3" width="18" height="6" rx="3" fill="#c9267a"/><rect x="-7" y="-1.8" width="9" height="2" rx="1" fill="#f08cc0" opacity=".7"/></g>
+  </defs></svg>
+  <div class="bar" id="bar">
+    <div class="bar-in">
+      <div class="row1">
+        <a class="brand" id="brandLink" href="/" aria-label="{{BRAND}}"><span class="flame" role="img" aria-label="{{BRAND}}"></span><b>{{BRAND}}</b></a>
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Szukaj w menu" autocomplete="off" aria-label="Szukaj w menu">
+          <button id="qx" type="button" aria-label="Wyczyść wyszukiwanie" hidden>✕</button>
+        </div>
+        <a class="homebtn" id="homeBtn" href="/" aria-label="Strona główna" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h4v-6h4v6h4V10"/></svg></a>
+        <div class="lang" id="lang"><button id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Język"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span id="langCode">PL</span></button><ul class="lmenu" id="langMenu" hidden></ul></div>
+      </div>
+      <nav class="chips" id="chips" aria-label="Kategorie menu"></nav>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cbar" id="closedBar" hidden role="status"></div>
+    <main id="menu"></main>
+  </div>
+
+  <div class="fab" id="fab" hidden>
+    <button type="button" id="openCart" aria-label="Otwórz koszyk">
+      <span class="cnt num" id="fabCnt">0</span>
+      <span class="lbl">Zobacz koszyk</span>
+      <span class="tot num" id="fabTot">0 zł</span>
+    </button>
+  </div>
+
+  <div class="scrim" id="scrim" hidden>
+    <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+      <div class="sheet-h"><h2 id="cartTitle">Twoje zamówienie</h2><button class="x" id="closeCart" type="button" aria-label="Zamknij koszyk">✕</button></div>
+      <div class="cbar" id="closedCart" hidden role="status"></div>
+      <div class="lines" id="lines"></div>
+      <div class="upsell" id="upsell" hidden></div>
+      <div class="disc" id="disc" hidden></div>
+      <div class="cpbox" id="cpBox" hidden><label id="cpL" for="cpIn"></label><div class="cprow"><input id="cpIn" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" id="cpGo" class="cpgo"></button><button type="button" id="cpDel" class="cpdel" hidden></button></div><div class="cpm" id="cpMsg" role="status"></div></div>
+      <div class="total"><span>Razem</span><b class="num" id="sheetTot">0 zł</b></div>
+
+      <div class="seg" role="group" aria-label="Rodzaj zamówienia">
+        <button type="button" id="mDine" aria-pressed="true">Na miejscu</button>
+        <button type="button" id="mPick" aria-pressed="false">Odbiór osobisty</button>
+      </div>
+
+      <form class="form" id="form" novalidate>
+        <div class="fld" id="gName"><label for="fName">Imię</label><input id="fName" autocomplete="name" placeholder="Imię do zamówienia"><div class="err" id="eName"></div></div>
+        <div class="fld" id="gPhone"><label for="fPhone">Numer telefonu</label><input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+48 ..."><div class="err" id="ePhone"></div></div>
+        <div class="fld" id="gEta" hidden><label for="fEta">Planowana godzina odbioru</label><input id="fEta" type="time"><div class="err" id="eEta"></div></div>
+        <div class="fld"><label for="fNotes">Uwagi do zamówienia (opcjonalnie)</label><textarea id="fNotes" placeholder="Bez cebuli, więcej sosu czosnkowego, alergie..."></textarea></div>
+      </form>
+
+      <a class="send" id="send" href="#" target="_blank" rel="noopener">Potwierdź zamówienie</a>
+      <a class="ghost alt" id="sendApp" href="#" target="_blank" rel="noopener">Otwórz w aplikacji WhatsApp</a>
+      <div class="sub"><button class="ghost" id="copy" type="button">Skopiuj zamówienie</button><button class="ghost" id="clear" type="button">Opróżnij koszyk</button></div>
+      <p class="note">WhatsApp otworzy się z gotowym zamówieniem. Naciśnij tam „Wyślij”, aby je złożyć.</p>
+      <div class="cashier"><span id="cashT">Jeśli WhatsApp się nie otwiera, skopiuj zamówienie i wyślij je na numer <b class="num" id="cashNum">+48 500 002 249</b></span><button class="ghost" id="copyNum" type="button">Skopiuj numer</button></div>
+    </section>
+  </div>
+  <div class="bov" id="bov" hidden>
+    <section class="bld" role="dialog" aria-modal="true" aria-labelledby="bTitle">
+      <div class="bh">
+        <button id="bBack" type="button" aria-label="Zamknij kreator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="bl"><span class="flame" aria-hidden="true"></span>{{BRAND}}</div>
+        <button id="bReset" type="button" aria-label="Zacznij od nowa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.6h4.6"/></svg></button>
+      </div>
+      <h2 class="bt" id="bTitle">Zbuduj swój <em>wrap</em></h2>
+      <div class="bo"><div class="sg" id="bSize" role="group" aria-label="Rozmiar"></div><div class="sg" id="bMeat" role="group" aria-label="Mięso"></div></div>
+      <div class="stage" id="bStage"></div>
+      <p class="hint" id="bHint"></p>
+      <div class="tabs" id="bTabs" role="tablist" aria-label="Rodzaje dodatków"></div>
+      <p class="binfo" id="bInfo"></p>
+      <div class="bgrid" id="bGrid"></div>
+      <div class="bcta"><button type="button" class="badd" id="bAdd"><span class="lbl">Dodaj do zamówienia</span><span class="dl" id="bDl" aria-hidden="true"></span><b class="num" id="bTot">0 zł</b></button></div>
+      <div class="btoast" id="bToast" hidden role="status"></div>
+    </section>
+  </div>
+  <div class="okov" id="okov" hidden><div class="okc" role="dialog" aria-modal="true"><div class="okic">✓</div><h2 id="okT"></h2><p id="okS"></p><p id="okP" class="okp" hidden></p><div class="okn"><span id="okNoL"></span> <b class="num" id="okNum"></b></div><button type="button" id="okClose" class="send"></button></div></div>
+  <div class="toast" id="toast" hidden></div>
+</div>

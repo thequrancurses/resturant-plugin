@@ -1,0 +1,29 @@
+/* Grill Hub – one shared header for every page (same as the menu): flame + name, menu, home, language */
+.gh-hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:#fff;border-top:3px solid #e11e26;box-shadow:0 1px 0 #ebe7e1;--red:#e11e26;--red-soft:#fdebea;--line:#ebe7e1;--bg:#f6f4f1;--ink:#141416;--muted:#6f6a64;color:#141416;direction:ltr}
+html.has-ordbar .gh-hdr{top:var(--ordh)}
+.gh-hdr *{box-sizing:border-box}
+.gh-hdr-in{max-width:920px;margin-inline:auto;padding:8px max(14px,env(safe-area-inset-left,0px)) 8px;display:flex;align-items:center;gap:8px;min-height:56px}
+.gh-hdr[dir=rtl] .gh-hdr-in{flex-direction:row-reverse}
+.gh-brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;color:inherit;text-decoration:none}
+.gh-flame{width:26px;height:35px;flex:none;background:var(--flame) center/contain no-repeat}
+.gh-brand b{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;font-size:22px;letter-spacing:.04em;line-height:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gh-ib{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--ink);border:1px solid rgba(0,0,0,.06);text-decoration:none}
+.gh-ib svg{width:21px;height:21px}
+.gh-ib.red{background:var(--red-soft);color:var(--red)}
+.gh-lang{position:relative;flex:none}
+.gh-lang>button{height:40px;min-width:48px;padding-inline:9px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:700 13px "DM Sans",system-ui,sans-serif;display:flex;align-items:center;gap:5px;cursor:pointer}
+.gh-lang>button svg{width:16px;height:16px}
+.gh-lmenu{position:absolute;inset-inline-end:0;top:46px;z-index:50;min-width:140px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(20,20,22,.18);padding:4px;margin:0;list-style:none}
+.gh-lmenu[hidden]{display:none}
+.gh-lmenu a,.gh-lmenu button{display:block;width:100%;text-align:start;height:40px;line-height:40px;border:0;background:transparent;border-radius:8px;padding-inline:10px;font:600 15px "DM Sans",system-ui,sans-serif;color:var(--ink);text-decoration:none;cursor:pointer}
+.gh-lmenu [aria-current=true]{background:var(--red-soft);color:#b9141b}
+@media (max-width:560px){.gh-ib{width:38px;height:38px}.gh-brand b{font-size:14px;letter-spacing:.05em}.gh-hdr-in{gap:6px}}
+
+.gh-ftr{--ft-ink:#141416;--ft-mut:#6f6a64;--ft-line:rgba(20,20,22,.12);margin-top:36px;padding:26px 16px calc(26px + env(safe-area-inset-bottom,0px));background:transparent;border-top:1px solid var(--ft-line);text-align:center;font:500 14px "DM Sans",system-ui,sans-serif;color:var(--ft-ink);clear:both;position:relative}
+.gh-ftr-dark{--ft-ink:#f4f1ec;--ft-mut:rgba(244,241,236,.55);--ft-line:rgba(255,255,255,.12);background:#0a0a0b}
+.gh-ftr[dir=rtl],html[lang=ar] .gh-ftr{font-family:"Cairo","DM Sans",system-ui,sans-serif}
+.gh-ftf{display:block;width:22px;height:30px;margin:0 auto 14px;background:var(--flame) center/contain no-repeat}
+.gh-ftr nav{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 6px;max-width:560px;margin:0 auto 14px}
+.gh-ftr a{color:var(--ft-ink);text-decoration:none;font-weight:600;font-size:14px;padding:7px 13px;border-radius:999px;border:1px solid var(--ft-line);transition:background .15s,color .15s,border-color .15s}
+.gh-ftr a:hover,.gh-ftr a:focus-visible{color:#fff;background:#e11e26;border-color:#e11e26}
+.gh-ftr p{margin:0;font-size:12px;color:var(--ft-mut)}

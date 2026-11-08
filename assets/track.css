@@ -1,0 +1,58 @@
+/* Grill Hub – order tracking page: same look as the menu (light, red, white cards) */
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body.ghm-track{--red:#e11e26;--red-dark:#b9141b;--red-soft:#fdebea;--ink:#141416;--bg:#f6f4f1;--card:#fff;--line:#ebe7e1;--muted:#6f6a64;--ok:#127a3a;--font-display:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.4;color:var(--ink);background:var(--bg);color-scheme:light}
+.num{font-variant-numeric:tabular-nums lining-nums;direction:ltr;unicode-bidi:isolate}
+.wait{min-height:100vh;min-height:100dvh;background:var(--bg)}
+.wait.rdy{background:#e9f7ee}
+.w-in{max-width:480px;margin:0 auto;padding:12px 16px calc(32px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;justify-items:center;align-content:start;text-align:center}
+.w-num{font-family:var(--font-display);font-size:20px;letter-spacing:.08em;color:var(--muted);margin-top:8px}
+.w-t{margin:0;font-family:var(--font-display);font-size:clamp(26px,7vw,34px);line-height:1.1;font-weight:800}
+.w-s{margin:0;color:var(--muted);max-width:340px}
+.w-ring{position:relative;width:min(74vw,300px);aspect-ratio:1;background:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(20,20,22,.08)}
+.w-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.w-ring circle{fill:none;stroke-width:7}.w-ring .bg{stroke:var(--line)}
+.w-ring .fg{stroke:var(--red);stroke-linecap:round;stroke-dasharray:339.292;stroke-dashoffset:339.292;transition:stroke-dashoffset 1s linear}
+.w-c{position:absolute;inset:0;display:grid;place-content:center;gap:4px}
+.w-time{font-family:var(--font-display);font-weight:800;font-size:clamp(54px,17vw,80px);line-height:1;direction:ltr}
+.w-cap{font-size:14px;color:var(--muted);max-width:190px;margin-inline:auto}
+.w-steps{display:flex;gap:6px;width:100%;justify-content:center}
+.ws{flex:1;display:grid;justify-items:center;gap:6px;font-size:13px;color:var(--muted);opacity:.7}
+.ws i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--line);font-weight:800;color:var(--ink)}
+.ws.on{opacity:1;color:var(--ink);font-weight:700}.ws.on i{background:var(--red);color:#fff;animation:wp 1.4s ease-in-out infinite}.ws.done{opacity:1}.ws.done i{background:#2ecc71;color:#06210f}
+@keyframes wp{50%{transform:scale(1.06)}}
+.w-sum{width:100%;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:8px;text-align:start;box-shadow:0 1px 3px rgba(20,20,22,.04)}
+.ws-t{font-weight:800;font-size:15px}
+.ws-l{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.ws-l em{display:block;color:var(--muted);font-size:12px;font-style:normal}
+.ws-l.ws-d{color:var(--ok)}
+.ws-tot{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:8px;font-weight:800;font-size:16px}
+.w-add-hint{margin:0;font-size:13px;color:var(--muted);max-width:340px}
+.w-keep{margin:0;font-size:14px;color:var(--muted);max-width:340px}
+.w-btn,.w-more{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:14px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.w-more{width:100%;max-width:360px;text-align:center}
+.w-btn.red,.w-go{background:var(--red);border-color:var(--red);color:#fff}
+.w-ok{width:100%;max-width:360px;border:0;border-radius:18px;padding:20px;background:var(--ok);color:#fff;font:inherit;font-weight:900;font-size:24px;cursor:pointer;animation:wp 1.2s ease-in-out infinite}
+.w-promos{display:grid;gap:10px;width:100%}
+.wp{display:grid;gap:4px;text-align:start;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 1px 3px rgba(20,20,22,.04)}
+.wp b{font-size:16px}.wp p{margin:0;font-size:14px;color:var(--muted)}
+.wp-code{background:linear-gradient(135deg,#fff6e0,var(--red-soft));border-color:#f2c9a0}
+.wp-copy{justify-self:start;margin-top:4px;border:2px dashed var(--red);background:#fff;color:var(--red-dark);border-radius:12px;padding:8px 14px;font:inherit;font-weight:800;cursor:pointer}
+.wp-soc{display:flex;gap:8px;flex-wrap:wrap}.wp-soc a{color:var(--ink);text-decoration:none;background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-weight:700}
+.wait.rdy .w-ring .fg{stroke:var(--ok)}.wait.rdy .w-time{color:var(--ok);font-size:clamp(90px,28vw,140px)}
+.wait.rdy .w-t{color:var(--ok);font-size:clamp(30px,9vw,42px)}
+.w-find{width:100%;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:start}
+.w-find summary{cursor:pointer;font-weight:700;list-style:none}.w-find summary::-webkit-details-marker{display:none}
+.w-find summary::before{content:"🔎 "}
+.w-find form{display:grid;gap:10px;margin-top:12px}
+.w-find p{margin:0;font-size:14px;color:var(--muted)}
+.w-find label{display:grid;gap:4px;font-size:13px;font-weight:700}
+.w-find input{border:1.5px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:#fff;color:var(--ink);width:100%}
+.w-find input:focus{outline:3px solid var(--red);outline-offset:1px;border-color:var(--red)}
+.w-go{border-radius:14px;padding:14px;font:inherit;font-weight:800;cursor:pointer;border:0}
+.w-err{color:var(--red-dark);font-weight:700;font-size:14px;min-height:1em}
+.toast{position:fixed;bottom:24px;inset-inline:0;margin:auto;width:max-content;max-width:90vw;background:var(--ink);color:#fff;border-radius:99px;padding:10px 18px;font-weight:700;z-index:50}
+.wait.rdy{animation:wr 1.4s ease-in-out infinite}
+@keyframes wr{50%{filter:brightness(.96)}}
+@media (prefers-reduced-motion:reduce){.wait.rdy,.w-ok,.ws.on i{animation:none}.w-ring .fg{transition:none}}

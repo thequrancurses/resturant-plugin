@@ -1,0 +1,61 @@
+الصنف  ->  ملف الصورة
+
+wraps > Shawarma Kurczak   ->   images/wrap_kurczak.jpg
+wraps > Shawarma Wołowa   ->   images/wrap_wolowa.jpg
+wraps > Shawarma Klasyczna   ->   images/wrap_klasyczna.jpg
+wraps > Joker   ->   images/wrap_joker.jpg
+box > Box Kurczak   ->   images/p1.jpg
+box > Box Wołowina   ->   images/p2.jpg
+box > Box Mix   ->   images/p3.jpg
+shaw > Shawarma Kurczak   ->   images/p5.jpg
+shaw > Shawarma Wołowina   ->   images/p6.jpg
+shaw > Shawarma Mix   ->   images/p7.jpg
+shaw > Duża Shawarma Mix   ->   images/p4.jpg
+grill > Shish z kurczaka   ->   images/p15.jpg
+grill > Shish Kofta   ->   images/p16.jpg
+grill > Shish Wołowina   ->   images/p14.jpg
+grill > Kotleciki jagnięce   ->   images/n_lamb.jpg
+grill > Mix Grill   ->   images/p12.jpg
+grill > Vip Mix Grill   ->   images/p11.jpg
+gwraps > Shish z kurczaka   ->   images/p9.jpg
+gwraps > Hawawshi   ->   images/p8.jpg
+gwraps > Shish Kofta   ->   images/gw_kofta.jpg
+gwraps > Shish Wołowina   ->   images/gw_wolowina.jpg
+veg > Wrap z frytkami   ->   images/n_wrap.jpg
+veg > Frytki serowe   ->   images/side_fries2.jpg
+veg > Frytki z sosem serowym i jalapeño   ->   images/side_cheese.jpg
+veg > Wrap Falafel   ->   images/n_falafel.jpg
+hum > Talerz hummusu   ->   images/n_hummus.jpg
+hum > Hummus z mięsem   ->   images/p10.jpg
+side > Sałatka arabska   ->   images/n_salad.jpg
+side > Frytki duże   ->   images/side_fries.jpg
+side > Ryż   ->   images/n_rice.jpg
+side > Dodatkowy ser   ->   images/n_cheese.jpg
+side > Dodatkowy sos   ->   images/n_garlic.jpg
+side > Kiszonki   ->   images/side_pickles.jpg
+side > Tostowany chleb   ->   images/n_pita.jpg
+dess > Baklawa   ->   images/n_baklava.jpg
+dess > Basbosa   ->   images/n_basbosa.jpg
+drink > Pepsi 0,33 l   ->   images/d_pepsi.jpg
+drink > Pepsi Zero 0,33 l   ->   images/d_pepsizero.jpg
+drink > Mirinda 0,33 l   ->   images/d_mirinda.jpg
+drink > 7UP 0,33 l   ->   images/d_7up.jpg
+drink > Mirinda 0,5 l   ->   images/d_mirinda_b.jpg
+drink > 7UP 0,5 l   ->   images/d_7up.jpg
+drink > Pepsi 0,5 l   ->   images/d_pepsi.jpg
+drink > Lipton Zielona Herbata 0,5 l   ->   images/d_lipton.jpg
+drink > Lipton Brzoskwinia 0,5 l   ->   images/d_lipton.jpg
+drink > Kryształ Zdrój gazowana 0,5 l   ->   images/d_water.jpg
+drink > Kryształ Zdrój niegazowana 0,5 l   ->   images/d_water.jpg
+juice > Soki Toma 0,33 l   ->   images/d_toma.jpg
+juice > Sok Rani Float 240 ml   ->   images/d_rani.jpg
+juice > Naturalny Ajran   ->   images/n_ayran.jpg
+juice > Ajran z mango   ->   images/p19.jpg
+side > Dodatkowy sos > 0   ->   images/n_garlic.jpg
+side > Dodatkowy sos > 1   ->   images/n_tahini.jpg
+side > Dodatkowy sos > 2   ->   images/n_cheese.jpg
+side > Dodatkowy sos > 3   ->   images/n_hummus_sauce.jpg
+side > Dodatkowy sos > 4   ->   images/n_ketchup.jpg
+side > Dodatkowy sos > 5   ->   images/n_sos_dark.jpg
+juice > Soki Toma 0,33 l > 1   ->   images/n_toma_apple.jpg
+juice > Sok Rani Float 240 ml > 6   ->   images/n_rani_cocktail.jpg
