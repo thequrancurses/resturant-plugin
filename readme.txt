@@ -3,7 +3,7 @@ Contributors: grillhub
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.18.0
+Stable tag: 1.19.0
 License: GPLv2 or later
 
 QR menu with WhatsApp ordering, kitchen orders, receipt printing, loyalty stamps, wrap builder and Polish / English / Arabic - for any restaurant.
@@ -31,6 +31,12 @@ Backup: download / load a .json file, reset to the empty starter menu, or load t
 
 == Motion (v1.3) ==
 Smooth scrolling (Lenis), GSAP reveals and sheet animations, plus click sparks, animated totals and card spotlight inspired by React Bits (re-written in plain JavaScript). Turn it off in Settings > Animations. Third-party licenses are in assets/vendor/.
+
+== Changelog 1.19.0 ==
+* New: online payment with Stripe (Checkout: cards, Apple Pay, Google Pay, BLIK), PayU and Przelewy24. Menu > Online payment.
+* One switch with three states: Off / Test mode (only a logged-in admin sees online payment, test / sandbox keys are used) / Go live.
+* An online order is held as "pending" and reaches the kitchen, the statistics and the alerts only after the gateway confirms the payment (webhook, and a status check while the customer waits on the tracking page). The kitchen ticket shows "PAID ONLINE".
+* Keys are stored in their own option, never in the menu data and never on the public page. The cart offers "pay at the restaurant" or the enabled online methods; the tracking page shows "waiting for payment" with a "Pay now" button.
 
 == Changelog 1.18.0 ==
 * The plugin is now a generic restaurant plugin. A new install starts with a small neutral starter menu (no brand, no address, no phone, no social / delivery links) that the owner fills in from the admin.

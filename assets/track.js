@@ -76,6 +76,14 @@
       if (skey !== sumKey) { sumKey = skey; sm.hidden = !skey; if (skey) sm.innerHTML = sumHtml(); }
     }
     var ab = $("wAdd"); if (ab) ab.hidden = !(ord && ord.name && ord.phone);
+    // online payment not confirmed yet: the order is not with the kitchen, so no countdown - just the state and a way to pay again
+    var pb = $("wPay"), pend = ord.pay === "pending" || ord.pay === "failed";
+    if (pend) {
+      $("wTitle").textContent = L("pay_wait_t"); $("wTime").textContent = "…"; $("wArc").style.strokeDashoffset = String(CIRC);
+      $("wCap").textContent = (ord.pay === "failed" || /[?&]pay=cancel/.test(location.search)) ? L("pay_failed") : L("pay_wait");
+      if (!pb) { pb = document.createElement("button"); pb.type = "button"; pb.id = "wPay"; pb.className = "w-btn w-go"; $("wCap").parentNode.insertBefore(pb, $("wCap").nextSibling); }
+      pb.textContent = L("pay_retry"); pb.hidden = false;
+    } else if (pb) pb.hidden = true;
     var nb = $("wNotify"); if (nb) nb.hidden = !("Notification" in window) || Notification.permission === "granted" || Notification.permission === "denied";
   }
   function sync(o) {
@@ -93,8 +101,16 @@
     }).catch(function () { er.textContent = L("tr_find_err"); });
   });
   document.addEventListener("click", function (e) {
-    var t = e.target.closest && e.target.closest("[data-lang], #wOk, #wNotify, #wAdd, [data-copy]"); if (!t) return;
+    var t = e.target.closest && e.target.closest("[data-lang], #wOk, #wNotify, #wAdd, #wPay, [data-copy]"); if (!t) return;
     if (t.dataset.lang) { try { localStorage.setItem("gh-lang", t.dataset.lang); } catch (x) {} built = ""; pickLang(); return tick(); }
+    if (t.id === "wPay") {
+      if (!C.pay_retry || !ord) return; t.disabled = true;
+      fetch(C.pay_retry, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: ord.id, t: ord.tok }) }).then(function (r) { return r.json(); }).then(function (j) {
+        t.disabled = false;
+        if (j && j.pay_url) location.href = j.pay_url; else if (j && j.paid) { O.poll(); } else toast(L("pay_fail"));
+      }).catch(function () { t.disabled = false; toast(L("pay_fail")); });
+      return;
+    }
     if (t.id === "wOk") { O.stop(); O.release(); ord.fin = true; O.save(ord); fin = true; built = ""; return tick(); }
     if (t.id === "wAdd") { try { localStorage.setItem("gh-add", JSON.stringify({ name: ord.name || "", phone: ord.phone || "", mode: ord.mode || "dine", eta: ord.eta || "" })); } catch (x) {} location.href = C.menu || "/"; return; }
     if (t.id === "wNotify") { try { Notification.requestPermission().then(function (p) { if (p === "granted") subscribe(); tick(); }); } catch (x) {} return; }

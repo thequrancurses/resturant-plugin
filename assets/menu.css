@@ -353,3 +353,5 @@ a.brand{color:inherit;text-decoration:none}
 .gh-deal-it span{color:#e11e26;font-weight:700}
 .gh-deal-go{display:block;width:100%;border:0;border-radius:14px;padding:14px;background:#e11e26;color:#fff;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(225,30,38,.35)}
 .gh-deal-go:disabled{background:#999;box-shadow:none;cursor:default}
+
+.payopts{display:grid;gap:8px}.payopts button{min-height:48px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:15px;text-align:start;padding:10px 12px;color:var(--ink)}.payopts button[aria-checked="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}

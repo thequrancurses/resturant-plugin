@@ -307,7 +307,7 @@
         if (!j || !j.ok) return;
         var cur = ordLoad(); if (cur && cur.ready) { ordNotify(cur); return; } // another tab already saw "ready"
         var oldRa = o.ready_at || 0, wasAcc = !!o.acc, l0 = OT[ordLang(o)] || OT.pl;
-        o.off = j.now * 1000 - Date.now(); if (j.ready_at && !o.eta) o.ready_at = j.ready_at; o.seen = !!(j.seen || j.accepted); o.acc = !!j.accepted;
+        o.off = j.now * 1000 - Date.now(); if (j.ready_at && !o.eta) o.ready_at = j.ready_at; o.seen = !!(j.seen || j.accepted); o.acc = !!j.accepted; o.pay = j.pay || "";
         if (j.lines) o.lines = j.lines; if (typeof j.total === "number") o.sum = j.total; if (typeof j.sub === "number") o.sub = j.sub; if (typeof j.combo === "number") o.combo = j.combo; if (typeof j.coupon === "number") o.coupon = j.coupon; if (typeof j.dep === "number") o.dep = j.dep; if (typeof j.pack === "number") o.pack = j.pack; if (j.name) o.name = j.name; if (j.phone) o.phone = j.phone; if (j.mode) o.mode = j.mode;
         if (!j.ready) {
           if (j.ready_at && !o.eta && oldRa && Math.abs(j.ready_at - oldRa) > 30) { o.total = Math.max(1, j.ready_at - j.now); o.ts = Date.now(); flash(l0.upd.replace("{m}", Math.max(1, Math.ceil((j.ready_at - j.now) / 60)))); }
@@ -323,7 +323,7 @@
     if (!ra && j.mode === "pick" && j.eta) { // later pick-up: count down to the chosen time
       var n = warsawNow(), mm = /^(\d{1,2}):(\d{2})/.exec(j.eta); if (mm) { var diff = (+mm[1] * 60 + +mm[2]) - n.min; if (diff < -30) diff += 1440; if (diff > 0) ra = Math.round((Date.now() + off) / 1000) + diff * 60; }
     }
-    var o = { id: j.id, tok: j.tok, num: j.number, ready_at: ra, off: off, mode: j.mode, eta: (!j.prep && j.eta) ? j.eta : "", ts: Date.now(), lang: lang || "pl", total: ra ? Math.max(1, ra - Math.round((Date.now() + off) / 1000)) : 0 };
+    var o = { id: j.id, tok: j.tok, num: j.number, ready_at: ra, off: off, mode: j.mode, eta: (!j.prep && j.eta) ? j.eta : "", ts: Date.now(), lang: lang || "pl", total: ra ? Math.max(1, ra - Math.round((Date.now() + off) / 1000)) : 0, pay: j.pay_url ? "pending" : "" };
     ordSave(o); unlockAudio(); return o;
   }
   function flash(t) { // small toast ("Kitchen update: ready in ~25 min")

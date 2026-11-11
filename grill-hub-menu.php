@@ -2,19 +2,20 @@
 /**
  * Plugin Name: Restaurant Menu & Ordering
  * Description: Interactive QR menu and WhatsApp ordering for restaurants (Polish / English / Arabic) with a "build your own wrap" builder, kitchen orders and loyalty stamps. Edit categories, dishes, prices, photos, texts and settings from the admin. Use the shortcode [grill_hub_menu] on a page, and [grill_hub_home] for the 3-button home page.
- * Version: 1.18.0
+ * Version: 1.19.0
  * Author: Your Name
  * License: GPLv2 or later
  * Text Domain: grill-hub-menu
  */
 if (!defined('ABSPATH')) exit;
 
-define('GHM_VER', '1.18.0');
+define('GHM_VER', '1.19.0');
 define('GHM_DIR', plugin_dir_path(__FILE__));
 define('GHM_URL', plugin_dir_url(__FILE__));
 define('GHM_OPT', 'ghm_data');
 define('GHM_STATS', 'ghm_stats');
 define('GHM_TZ', 'Europe/Warsaw');
+require_once GHM_DIR . 'includes/payments.php';   // online payments (Stripe, PayU, Przelewy24)
 require_once GHM_DIR . 'includes/webpush.php';   // customer push notifications (order accepted / ready)
 require_once GHM_DIR . 'includes/loyalty/bootstrap.php';   // Loyalty section (stamp cards)
 
@@ -819,6 +820,7 @@ function ghm_public($data) {
     $vk = function_exists('ghm_push_ready') && ghm_push_ready() ? ghm_vapid() : false;       // push needs PHP >= 7.3 + openssl
     if ($vk) { $data['settings']['push_key'] = $vk['pub']; $data['settings']['push_url'] = rest_url('ghm/v1/push/subscribe'); $data['settings']['sw_url'] = home_url('/?ghm-sw=1'); }
     $data['settings']['track_url'] = ghm_track_url();
+    $data['settings']['pay'] = !empty($data['settings']['orders']) ? ghm_pay_public() : null;   // enabled methods only, never a key
     return $data;
 }
 // where the logo / home button of the menu page leads: the front page when the home page is on, otherwise the site root
@@ -1109,7 +1111,7 @@ function ghm_track_render($data) {
         header('Content-Type: text/html; charset=' . get_bloginfo('charset')); header('X-Robots-Tag: noindex, nofollow');
         $pub = ghm_public($data);
         $cfg = array('brand' => $data['settings']['brand'], 'logo' => isset($pub['settings']['logo']) ? $pub['settings']['logo'] : '', 'lang' => $data['settings']['default_lang'],
-            'status' => rest_url('ghm/v1/status'), 'lookup' => rest_url('ghm/v1/lookup'), 'menu' => get_permalink(ghm_find_page()) ?: home_url('/'), 'home' => ghm_home_target($data), 'wait' => $pub['settings']['wait'],
+            'status' => rest_url('ghm/v1/status'), 'lookup' => rest_url('ghm/v1/lookup'), 'pay_retry' => rest_url('ghm/v1/pay/retry'), 'menu' => get_permalink(ghm_find_page()) ?: home_url('/'), 'home' => ghm_home_target($data), 'wait' => $pub['settings']['wait'],
             'push_key' => isset($pub['settings']['push_key']) ? $pub['settings']['push_key'] : '', 'push_url' => isset($pub['settings']['push_url']) ? $pub['settings']['push_url'] : '', 'sw_url' => isset($pub['settings']['sw_url']) ? $pub['settings']['sw_url'] : '',
             'phone' => isset($pub['settings']['phone']) ? $pub['settings']['phone'] : '');
         ?><!doctype html>
@@ -1555,6 +1557,13 @@ function ghm_rest_order($req) {
     if ($gift) { $lines[] = array('name' => 'GRATIS: ' . $gift['name'], 'qty' => 1, 'price' => 0, 'desc' => ''); $fparts[] = array('cat' => $gift['cat'], 'qty' => 1); $cnt['gf:' . $gift['id']] = 1; }
     $fee = ghm_fees_calc($data, $fparts, $mode);
     $total = max(0, $sub - $off[0] - $off[1]) + $fee[0] + $fee[1];
+    // online payment: checked before anything is counted (coupon use etc.)
+    $pm = isset($in['pay']) ? sanitize_key($in['pay']) : 'cash';
+    $online = in_array($pm, ghm_pay_providers(), true);
+    if ($online) {
+        $pc = ghm_pay_order_check($pm, $in, $total);
+        if (is_string($pc)) return new WP_REST_Response(array('ok' => false, 'error' => $pc), 400);
+    }
     if ($off[0] > 0) $cnt['cb'] = 1;
     if ($off[2] !== '') { $cnt['cp:' . $off[2]] = 1; $u = (array) get_option('ghm_cp_used', array()); $u[$off[2]] = (isset($u[$off[2]]) ? (int) $u[$off[2]] : 0) + 1; update_option('ghm_cp_used', $u, false); }
     if ($off[0] + $off[1] > 0) $cnt['ds'] = (int) round($off[0] + $off[1]);
@@ -1585,10 +1594,22 @@ function ghm_rest_order($req) {
         if ($pt) { $order['dist_km'] = round(ghm_haversine((float) $gs['lat'], (float) $gs['lng'], $pt[0], $pt[1]), 1); $order['dist_src'] = $src; }
     }
     $cnt['os:' . $order['src']] = 1; $cnt['rs:' . $order['src']] = (int) round($total);
+    if ($online) {   // held until the gateway confirms the payment: no kitchen, no statistics, no alerts yet
+        $order['pay'] = array('m' => $pm, 'st' => 'pending', 'amt' => ghm_pay_grosz($order['total']), 'test' => $pc['test'], 'ip' => ghm_client_ip(), 'try' => 0, 'ref' => '',
+            'email' => $pm === 'p24' ? sanitize_email((string) $in['email']) : '');
+        $order['cnt'] = $cnt; $order['ready_at'] = 0;
+    }
     $pid = wp_insert_post(array('post_type' => 'ghm_order', 'post_status' => 'publish', 'post_title' => '#' . $seq, 'post_content' => wp_slash(ghm_json($order))));
     if (!$pid) return new WP_REST_Response(array('ok' => false, 'error' => 'db'), 500);
     // keep the last 30 days only
     foreach (get_posts(array('post_type' => 'ghm_order', 'numberposts' => 20, 'date_query' => array(array('before' => '30 days ago')), 'fields' => 'ids')) as $old) wp_delete_post($old, true);
+    if ($online) {
+        $url = ghm_pay_start($order, $pid);
+        if (is_wp_error($url)) { wp_delete_post($pid, true); return new WP_REST_Response(array('ok' => false, 'error' => 'pay_init'), 502); }
+        ghm_pay_save($pid, $order);
+        return new WP_REST_Response(array('ok' => true, 'number' => $seq, 'total' => $order['total'], 'discount' => round($off[0] + $off[1], 2), 'id' => $pid, 'tok' => $order['tok'],
+            'prep' => 0, 'ready_at' => 0, 'now' => time(), 'mode' => $mode, 'eta' => $order['eta'], 'pay_url' => $url), 200);
+    }
     ghm_stats_add($cnt);
     ghm_customer_add($pid, $order);
     ghm_alert_new_order($pid, $order);
@@ -1613,7 +1634,8 @@ function ghm_rest_status($req) {
     if (!$p || $p->post_type !== 'ghm_order') return new WP_REST_Response(array('ok' => false), 404);
     $o = json_decode($p->post_content, true);
     if (!is_array($o) || empty($o['tok']) || !hash_equals((string) $o['tok'], (string) $req->get_param('t'))) return new WP_REST_Response(array('ok' => false), 404);
-    return new WP_REST_Response(array_merge(array('ok' => true, 'ready' => !empty($o['done']), 'accepted' => !empty($o['accepted']) || !empty($o['done']), 'accepted_at' => (int) (isset($o['accepted_at']) ? $o['accepted_at'] : 0), 'ready_at' => (int) (isset($o['ready_at']) ? $o['ready_at'] : 0), 'now' => time(), 'num' => $o['num'], 'seen' => !empty($o['seen'])), ghm_order_summary($o)), 200);
+    if (ghm_pay_state($o) === 'pending' || ghm_pay_state($o) === 'failed') { $o2 = ghm_pay_pull($p->ID); if (is_array($o2)) $o = $o2; }
+    return new WP_REST_Response(array_merge(array('ok' => true, 'pay' => ghm_pay_state($o), 'ready' => !empty($o['done']), 'accepted' => !empty($o['accepted']) || !empty($o['done']), 'accepted_at' => (int) (isset($o['accepted_at']) ? $o['accepted_at'] : 0), 'ready_at' => (int) (isset($o['ready_at']) ? $o['ready_at'] : 0), 'now' => time(), 'num' => $o['num'], 'seen' => !empty($o['seen'])), ghm_order_summary($o)), 200);
 }
 /* ------------------------------------------------------------- statistics
    Anonymous counters only (no cookies, no IP, no personal data). t = all-time totals, d = per day (Warsaw date), last 120 days.
@@ -1719,10 +1741,12 @@ function ghm_rest_orders($req) {
     if (time() - (int) get_option('ghm_k_seen', 0) >= 8) update_option('ghm_k_seen', time(), false); // heartbeat: the kitchen page is open
     $out = array();
     foreach (get_posts(array('post_type' => 'ghm_order', 'numberposts' => 200, 'orderby' => 'ID', 'order' => 'DESC')) as $p) {
-        if ($p->ID <= $after) continue;
         $o = ghm_order_out($p);
+        if ($o && !empty($o['pay']) && $o['pay']['st'] !== 'paid') continue;   // online order still waiting for its payment
+        $fresh = $o && !empty($o['pay']['paid_at']) && time() - (int) $o['pay']['paid_at'] <= 40;   // paid just now: an older id, but new for the kitchen
+        if ($p->ID <= $after && !$fresh) continue;
         if ($o) {
-            if (empty($o['seen']) && $p->ID > $after) { $c = json_decode($p->post_content, true); $c['seen'] = time(); wp_update_post(array('ID' => $p->ID, 'post_content' => wp_slash(ghm_json($c)))); $o['seen'] = $c['seen']; }
+            if (empty($o['seen']) && ($p->ID > $after || $fresh)) { $c = json_decode($p->post_content, true); $c['seen'] = time(); wp_update_post(array('ID' => $p->ID, 'post_content' => wp_slash(ghm_json($c)))); $o['seen'] = $c['seen']; }
             unset($o['tok']);
             $out[] = $o;
         }
@@ -1783,7 +1807,7 @@ function ghm_rest_lookup($req) {
         $o = json_decode($p->post_content, true);
         if (!is_array($o) || (int) $o['num'] !== $num) continue;
         if (substr(preg_replace('/\D/', '', isset($o['phone']) ? $o['phone'] : ''), -4) !== $ph) continue;
-        return new WP_REST_Response(array_merge(array('ok' => true, 'id' => $p->ID, 'tok' => $o['tok'], 'num' => $o['num'], 'ready' => !empty($o['done']), 'ready_at' => (int) (isset($o['ready_at']) ? $o['ready_at'] : 0),
+        return new WP_REST_Response(array_merge(array('ok' => true, 'pay' => ghm_pay_state($o), 'id' => $p->ID, 'tok' => $o['tok'], 'num' => $o['num'], 'ready' => !empty($o['done']), 'ready_at' => (int) (isset($o['ready_at']) ? $o['ready_at'] : 0),
             'now' => time(), 'mode' => $o['mode'], 'eta' => !empty($o['eta']) && empty($o['prep']) ? $o['eta'] : '', 'lang' => isset($o['lang']) ? $o['lang'] : 'pl', 'seen' => !empty($o['seen']) || !empty($o['accepted']), 'accepted' => !empty($o['accepted'])), ghm_order_summary($o)), 200);
     }
     return new WP_REST_Response(array('ok' => false, 'error' => 'none'), 404);
@@ -1843,7 +1867,7 @@ function ghm_geo_lookup($ip) {
     $parts = array_filter(array(isset($j['city']) ? $j['city'] : '', isset($j['region']) ? $j['region'] : '', isset($j['country_code']) ? $j['country_code'] : ''));
     return substr(sanitize_text_field(implode(', ', $parts)), 0, 80);
 }
-function ghm_customer_add($pid, $o) {
+function ghm_customer_add($pid, $o, $ipOverride = null) {
     $digits = preg_replace('/\D/', '', isset($o['phone']) ? $o['phone'] : '');
     if (strlen($digits) < 7 && trim((string) $o['name']) === '') return;
     $key = strlen($digits) >= 7 ? $digits : 'n' . md5(strtolower($o['name']));
@@ -1852,7 +1876,7 @@ function ghm_customer_add($pid, $o) {
     $c['name'] = $o['name'] !== '' ? $o['name'] : $c['name']; $c['phone'] = $o['phone'] !== '' ? $o['phone'] : $c['phone'];
     $c['n'] = (int) $c['n'] + 1; $c['sum'] = round((float) $c['sum'] + (float) $o['total'], 2); $c['last'] = time(); $c['mode'] = $o['mode'];
     $c['src'] = !empty($o['src']) ? $o['src'] : $c['src'];
-    $ip = ghm_client_ip(); $c['ip'] = ghm_ip_mask($ip);
+    $ip = $ipOverride !== null ? $ipOverride : ghm_client_ip(); $c['ip'] = ghm_ip_mask($ip);
     $list[$key] = $c;
     if (count($list) > 5000) { uasort($list, function ($a, $b) { return (isset($b['last']) ? $b['last'] : 0) - (isset($a['last']) ? $a['last'] : 0); }); $list = array_slice($list, 0, 5000, true); }
     update_option('ghm_customers', $list, false);

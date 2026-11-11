@@ -69,6 +69,7 @@
     { group: 1, title: "Business" },
     { id: "biz", label: "Hours, address & SEO", group: 1 },
     { id: "settings", label: "Settings", group: 1 },
+    { id: "pay", label: "Online payment", group: 1 },
     { group: 1, title: "Insights" },
     { id: "stats", label: "Statistics", group: 1 },
     { id: "cust", label: "Customers", group: 1 },
@@ -447,6 +448,75 @@
     return '<div class="card ghm-card"><h3>Tracking links</h3><p class="description">Use these links in each place. Any word works: add <code>?src=yourword</code> to your address and it shows up in the table above.</p><table class="ghm-t"><tbody>' +
       L.map(function (x) { return "<tr><th>" + h(x[0]) + '</th><td><input type="text" readonly class="large-text" value="' + h(x[1]) + '" onclick="this.select()">' + (x[2] ? '<p class="description">' + h(x[2]) + "</p>" : "") + "</td></tr>"; }).join("") + "</tbody></table></div>";
   }
+  /* ---- Online payment (Stripe / PayU / Przelewy24): its own data + save, so the keys never travel with the menu ---- */
+  var PY = null, pyLoading = false, PYE = { on: {}, test: {}, live: {} }, pyMsg = {};
+  function loadPay() {
+    if (pyLoading) return; pyLoading = true;
+    $.post(CFG.ajax, { action: "ghm_pay_get", nonce: CFG.nonce }).done(function (r) { pyLoading = false; if (r && r.success) { PY = r.data; if (st.tab === "pay") render(); } }).fail(function () { pyLoading = false; });
+  }
+  function paySave(mode, then) {
+    var cfg = { mode: mode || PY.mode, on: $.extend({}, PY.on, PYE.on), test: PYE.test, live: PYE.live };
+    $.post(CFG.ajax, { action: "ghm_pay_save", nonce: CFG.nonce, cfg: JSON.stringify(cfg) }).done(function (r) {
+      if (r && r.success) { PY = r.data; PYE = { on: {}, test: {}, live: {} }; render(); if (then) then(); } else alert((r && r.data) || "Could not save.");
+    }).fail(function () { alert("Could not save."); });
+  }
+  var PAYN = { stripe: "Stripe", payu: "PayU", p24: "Przelewy24" };
+  var PAYF = {
+    stripe: [["sk", "Secret key", "sk_test_… (test) / sk_live_… (live)", 1], ["whsec", "Webhook signing secret", "whsec_…", 1]],
+    payu: [["pos", "POS ID", "", 0], ["cid", "OAuth client ID", "", 0], ["secret", "OAuth client secret", "", 1], ["key2", "Second key (MD5)", "", 1]],
+    p24: [["merchant", "Merchant ID", "", 0], ["pos", "POS ID", "usually the same as the Merchant ID", 0], ["key", "API key (reports key)", "", 1], ["crc", "CRC key", "", 1]]
+  };
+  var PAYH = {
+    stripe: "Dashboard → Developers → API keys. Add a webhook endpoint (URL below) with the events <code>checkout.session.completed</code>, <code>checkout.session.async_payment_succeeded</code>, <code>checkout.session.async_payment_failed</code> and <code>checkout.session.expired</code>, then paste its signing secret. Turn on BLIK / Apple Pay / Google Pay under Settings → Payment methods. Test card: <code>4242 4242 4242 4242</code>.",
+    payu: "PayU panel → Payment shops → your shop → POS. Use a sandbox POS (secure.snd.payu.com) for the test keys and the real POS for the live keys. Set the notification URL (below) in the POS settings.",
+    p24: "Przelewy24 panel → My data / API keys. Use a sandbox account (sandbox.przelewy24.pl) for the test keys and the real account for the live keys. The customer's e-mail is asked in the cart for this method. The status URL (below) is sent automatically with every payment."
+  };
+  function payField(e, p, f) {
+    var def = f[3], cur = (PYE[e][p] || {})[f[0]], v = PY[e][p][f[0]];
+    if (def) return '<label>' + h(f[1]) + ' <input type="password" autocomplete="new-password" class="regular-text" data-pay-k="' + e + "|" + p + "|" + f[0] + '" value="' + h(cur || "") + '" placeholder="' + h(v.set ? v.hint + " saved – leave empty to keep" : f[2]) + '"></label>' +
+      (v.set ? ' <button type="button" class="button-link" data-pay-clear="' + e + "|" + p + "|" + f[0] + '">remove</button>' : "");
+    return '<label>' + h(f[1]) + ' <input type="text" class="regular-text" data-pay-k="' + e + "|" + p + "|" + f[0] + '" value="' + h(cur != null ? cur : v) + '" placeholder="' + h(f[2]) + '"></label>';
+  }
+  PANES.pay = function () {
+    if (!PY) { loadPay(); return '<p class="description">Loading…</p>'; }
+    var m = PY.mode, on = $.extend({}, PY.on, PYE.on);
+    var pill = m === "live" ? '<b style="color:#0a7d33">● LIVE – customers can pay online</b>' : m === "test" ? '<b style="color:#b26a00">● TEST MODE – only you (logged in as admin) see online payment; the keys are the test keys</b>' : '<b style="color:#666">● OFF – customers see no online payment</b>';
+    var out = '<div class="card ghm-card"><h3>Online payment</h3><p>' + pill + '</p>' +
+      '<p class="description">Customers choose “pay at the restaurant” or an online method in the cart. An online order reaches the kitchen only after the payment is confirmed. Keys are stored on your server only and are never sent to the public page.</p>' +
+      (PY.https ? "" : '<p style="color:#b00020"><b>Your site is not on https.</b> Stripe, PayU and Przelewy24 need an https address to send payment confirmations.</p>') +
+      '<p><button class="button' + (m === "off" ? " button-primary" : "") + '" data-pay-mode="off">Off</button> <button class="button' + (m === "test" ? " button-primary" : "") + '" data-pay-mode="test">Test mode (only me)</button> ' +
+      '<button class="button button-large' + (m === "live" ? " button-primary" : "") + '" data-pay-mode="live">🚀 Go live</button></p>' +
+      '<ol class="description"><li>Enter the <b>test</b> keys below, tick the method, press <b>Save</b>, then <b>Check connection</b>.</li><li>Press <b>Test mode</b>, open your menu while logged in and place an order with the test card.</li>' +
+      '<li>Check it appears in the kitchen with “PAID ONLINE (… TEST)”. Enter the <b>live</b> keys and press <b>Go live</b>.</li></ol></div>';
+    ["stripe", "payu", "p24"].forEach(function (p) {
+      out += '<div class="card ghm-card"><h3>' + PAYN[p] + '</h3><p><label class="ck"><input type="checkbox" data-pay-on="' + p + '"' + (on[p] ? " checked" : "") + '> <b>Offer ' + PAYN[p] + ' to customers</b></label></p><p class="description">' + PAYH[p] + "</p>";
+      ["test", "live"].forEach(function (e) {
+        out += '<h4>' + (e === "test" ? "Test keys" : "Live keys") + (PY.ok[e][p] ? ' <span style="color:#0a7d33">✓ complete</span>' : ' <span style="color:#999">incomplete</span>') + "</h4>" +
+          PAYF[p].map(function (f) { return '<div class="tools">' + payField(e, p, f) + "</div>"; }).join("") +
+          '<p><button class="button" data-pay-check="' + p + "|" + e + '">Check connection</button> <span class="description">' + h(pyMsg[p + e] || "") + "</span></p>";
+      });
+      out += '<p><label>' + (p === "stripe" ? "Webhook URL" : p === "payu" ? "Notification URL" : "Status URL") + ' <input type="text" readonly class="large-text" style="min-width:320px" value="' + h(PY.urls[p]) + '" onclick="this.select()"></label></p></div>';
+    });
+    out += '<p><button class="button button-primary" data-pay-save="1">Save payment settings</button></p>';
+    out += '<div class="card ghm-card"><h3>Recent payment events</h3><table class="ghm-t"><tbody>' + ((PY.log || []).map(function (x) { return "<tr><td>" + h(x.t) + "</td><td>" + h(x.m) + "</td></tr>"; }).join("") || '<tr><td class="ghm-empty">Nothing yet.</td></tr>') + "</tbody></table></div>";
+    return out;
+  };
+  $(root).on("input", "[data-pay-k]", function () { var k = this.getAttribute("data-pay-k").split("|"); PYE[k[0]][k[1]] = PYE[k[0]][k[1]] || {}; PYE[k[0]][k[1]][k[2]] = this.value; });
+  $(root).on("change", "[data-pay-on]", function () { PYE.on[this.getAttribute("data-pay-on")] = this.checked; });
+  $(root).on("click", "[data-pay-clear]", function () { var k = this.getAttribute("data-pay-clear").split("|"); if (!confirm("Remove this saved key?")) return; PYE[k[0]][k[1]] = PYE[k[0]][k[1]] || {}; PYE[k[0]][k[1]][k[2]] = "__clear__"; paySave(); });
+  $(root).on("click", "[data-pay-save]", function () { paySave(); });
+  $(root).on("click", "[data-pay-mode]", function () {
+    var m = this.getAttribute("data-pay-mode");
+    if (m === "live" && !confirm("Go live? Customers will be able to pay for real with their cards and BLIK.\n\nHave you placed a test order and seen it arrive in the kitchen?")) return;
+    paySave(m);
+  });
+  $(root).on("click", "[data-pay-check]", function () {
+    var k = this.getAttribute("data-pay-check").split("|");
+    paySave(null, function () {
+      pyMsg[k[0] + k[1]] = "Checking…"; render();
+      $.post(CFG.ajax, { action: "ghm_pay_check", nonce: CFG.nonce, p: k[0], e: k[1] }).done(function (r) { pyMsg[k[0] + k[1]] = (r && r.success ? "✓ " : "✗ ") + ((r && r.data) || "Error"); render(); }).fail(function () { pyMsg[k[0] + k[1]] = "✗ Request failed"; render(); });
+    });
+  });
   function loadCust(extra) {
     if (cuLoading) return; cuLoading = true;
     $.post(CFG.ajax, $.extend({ action: "ghm_customers", nonce: CFG.nonce }, extra || {})).done(function (r) { cuLoading = false; if (r && r.success) { CU = r.data; if (st.tab === "cust") render(); } }).fail(function () { cuLoading = false; });

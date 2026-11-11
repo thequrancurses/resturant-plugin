@@ -344,6 +344,7 @@
     $("mDine").setAttribute("aria-pressed", mode === "dine");
     $("mPick").setAttribute("aria-pressed", mode === "pick");
     $("gEta").hidden = mode !== "pick";
+    renderPay();
   }
   function openCart() { $("scrim").hidden = false; document.body.style.overflow = "hidden"; askGeo(); renderCart(); }
   function closeCart() { $("scrim").hidden = true; document.body.style.overflow = ""; }
@@ -354,6 +355,7 @@
     if (!totals().count) return false;
     ok = fieldErr("gName", "eName", $("fName").value.trim() ? "" : L("e_name")) && ok;
     ok = fieldErr("gPhone", "ePhone", $("fPhone").value.replace(/\D/g, "").length >= 7 ? "" : L("e_phone")) && ok;
+    if (payM() === "p24") ok = fieldErr("gEmail", "eEmail", /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test($("fEmail").value.trim()) ? "" : L("e_email")) && ok;
     if (mode !== "dine") {
       var eta = $("fEta").value, etaMsg = !eta ? L("e_eta") : (MODE !== "off" && G && HRS.length && !G.etaOpen(HRS, eta) ? fmt(L("e_eta_closed"), { h: G.summary(HRS, LANG).join(" · ") }) : "");
       ok = fieldErr("gEta", "eEta", etaMsg) && ok;
@@ -815,7 +817,7 @@
     ["#openCart", "aria-label", "fab_aria"], ["#openCart .lbl", "text", "fab_label"], ["#cartTitle", "text", "cart_title"], ["#closeCart", "aria-label", "cart_close"],
     [".total span", "text", "total"], [".seg", "aria-label", "type_aria"], ["#mDine", "text", "dine"], ["#mPick", "text", "pick"],
     ["label[for=fName]", "text", "f_name"], ["#fName", "placeholder", "ph_name"],
-    ["label[for=fPhone]", "text", "f_phone"], ["label[for=fEta]", "text", "f_eta"], ["label[for=fNotes]", "text", "f_notes"], ["#fNotes", "placeholder", "ph_notes"],
+    ["label[for=fPhone]", "text", "f_phone"], ["label[for=fEmail]", "text", "f_email"], ["label[for=fEta]", "text", "f_eta"], ["label[for=fNotes]", "text", "f_notes"], ["#fNotes", "placeholder", "ph_notes"],
     ["#send", "text", "send_wa"], ["#sendApp", "text", "send_app"], ["#copy", "text", "copy_order"], ["#clear", "text", "clear_cart"], [".note", "text", "wa_note"],
     ["#cashT", "html", "cash_help"], ["#copyNum", "text", "copy_num"], ["#footT", "text", "foot"],
     ["#bBack", "aria-label", "b_back"], ["#bReset", "aria-label", "b_reset"], ["#bTitle", "html", "build_title"], ["#bSize", "aria-label", "size_aria"],
@@ -837,6 +839,7 @@
     try { document.documentElement.lang = l; } catch (e) {}
     applyStatic();
     if (DIRECT_ONLY && !failed) $("send").textContent = L("send_order");
+    renderPay();
     $("homeBtn").setAttribute("aria-label", L("nav_home")); $("homeBtn").title = L("nav_home");
     $("langCode").textContent = l === "ar" ? "ع" : l.toUpperCase();
     Array.prototype.forEach.call($("langMenu").querySelectorAll("button"), function (b) { b.setAttribute("aria-current", b.dataset.lang === l ? "true" : "false"); });
@@ -860,6 +863,20 @@
     if (geoTried || !("geolocation" in navigator)) return; geoTried = true;
     try { navigator.geolocation.getCurrentPosition(function (p) { if (p && p.coords) geoPos = { lat: Math.round(p.coords.latitude * 10000) / 10000, lng: Math.round(p.coords.longitude * 10000) / 10000, t: Date.now() }; }, function () {}, { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }); } catch (e) {}
   }
+  /* Online payment (Stripe / PayU / Przelewy24): the methods come from the server (S.pay); a key never reaches this page. */
+  var payChoice = "cash";
+  function payM() { return S.pay && S.pay.methods && DIRECT && payChoice !== "cash" && S.pay.methods.indexOf(payChoice) > -1 ? payChoice : "cash"; }
+  function renderPay() {
+    var P = S.pay, g = $("gPay"); if (!g) return;
+    if (!P || !DIRECT || !P.methods || !P.methods.length) { g.hidden = true; $("gEmail").hidden = true; return; }
+    var on = payM() !== "cash";
+    g.hidden = false; $("payL").textContent = L("pay_label") + (P.test ? " (TEST)" : "");
+    $("payOpts").innerHTML = ["cash"].concat(P.methods).map(function (m) { return '<button type="button" role="radio" aria-checked="' + (payM() === m) + '" data-pay="' + m + '">' + esc(L("pay_" + m)) + "</button>"; }).join("");
+    $("gEmail").hidden = payM() !== "p24";
+    $("send").textContent = on ? L("pay_go") : (DIRECT_ONLY && !failed ? L("send_order") : L("send_wa"));
+    var hide = on ? "none" : ""; $("sendApp").style.display = hide; document.querySelector(".note").style.display = hide; document.querySelector(".cashier").style.display = hide;
+  }
+  $("payOpts").addEventListener("click", function (e) { var b = e.target.closest("[data-pay]"); if (!b) return; payChoice = b.getAttribute("data-pay"); renderPay(); });
   function orderPayload() {
     var p = {
       src: G ? G.source() : "", lang: LANG, code: cpn ? cpn.code : "", mode: mode, table: (G && G.table ? G.table() : ""), name: $("fName").value.trim(), phone: $("fPhone").value.trim(), eta: $("fEta").value, notes: $("fNotes").value.trim(), lang: LANG,
@@ -868,6 +885,7 @@
       })
     };
     if (geoPos && Date.now() - geoPos.t < 5 * 60 * 1000) { p.lat = geoPos.lat; p.lng = geoPos.lng; }
+    var pm = payM(); if (pm !== "cash") { p.pay = pm; p.tt = S.pay.tt || ""; if (pm === "p24") p.email = $("fEmail").value.trim(); }
     return p;
   }
   $("cpGo").addEventListener("click", applyCoupon);
@@ -883,8 +901,10 @@
       .then(function (r) { return r.json().catch(function () { return null; }); })
       .then(function (j) {
         if (j && j.error === "closed") { sending = false; forceClosed = true; toast(L("closed_toast")); renderCart(); return; }
+        if (j && /^pay_/.test(j.error || "")) { sending = false; toast(L(j.error === "pay_min" ? "pay_min" : "pay_fail")); return; }
         if (!j || !j.ok) throw new Error("fail");
         sending = false;
+        if (j.pay_url) { cart = {}; changed(false); closeCart(); if (G && G.ord) G.ord.start(j, LANG); location.href = j.pay_url; return; } // online payment: the gateway page, then back to the tracking page
         var wa = openWa ? openWa(j) : null; // build the WhatsApp text while the cart still holds the items (clearing first sent an empty order)
         cart = {}; changed(false); closeCart();
         var to = G && G.ord ? G.ord.start(j, LANG) : null;
@@ -901,7 +921,7 @@
   $("send").addEventListener("click", function (e) {
     if (!DIRECT || e.defaultPrevented || failed) return;
     e.preventDefault();
-    submitOrder(S.orders_wa ? waHref : null);
+    submitOrder(payM() !== "cash" ? null : (S.orders_wa ? waHref : null));
   });
   $("sendApp").addEventListener("click", function (e) {
     if (!DIRECT || e.defaultPrevented || failed) return;
